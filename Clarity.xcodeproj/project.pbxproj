@@ -17,7 +17,7 @@
 		D45EF3C3252764BC00D733C0 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3BD252764BB00D733C0 /* Styles.swift */; };
 		D45EF3C4252764BC00D733C0 /* VideoFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3BE252764BB00D733C0 /* VideoFeedView.swift */; };
 		D45EF3C5252764BC00D733C0 /* TweetFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3BF252764BB00D733C0 /* TweetFeed.swift */; };
-		D45EF3C6252764BC00D733C0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3C0252764BB00D733C0 /* Profile.swift */; };
+		D45EF3C6252764BC00D733C0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3C0252764BB00D733C0 /* Settings.swift */; };
 		D45EF3C7252764BC00D733C0 /* ExerciceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3C1252764BC00D733C0 /* ExerciceView.swift */; };
 		D45EF3CC252765BF00D733C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3CB252765BF00D733C0 /* AppView.swift */; };
 		D45EF3E12527660A00D733C0 /* MyMoodList .swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3DC2527660A00D733C0 /* MyMoodList .swift */; };
@@ -60,7 +60,7 @@
 		D45EF3BD252764BB00D733C0 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		D45EF3BE252764BB00D733C0 /* VideoFeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoFeedView.swift; sourceTree = "<group>"; };
 		D45EF3BF252764BB00D733C0 /* TweetFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetFeed.swift; sourceTree = "<group>"; };
-		D45EF3C0252764BB00D733C0 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		D45EF3C0252764BB00D733C0 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		D45EF3C1252764BC00D733C0 /* ExerciceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciceView.swift; sourceTree = "<group>"; };
 		D45EF3CB252765BF00D733C0 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		D45EF3DC2527660A00D733C0 /* MyMoodList .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyMoodList .swift"; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 				D45EF3E92527661400D733C0 /* Mood */,
 				D45EF3C1252764BC00D733C0 /* ExerciceView.swift */,
 				D45EF3BC252764BB00D733C0 /* MentalFeed.swift */,
-				D45EF3C0252764BB00D733C0 /* Profile.swift */,
+				D45EF3C0252764BB00D733C0 /* Settings.swift */,
 				D45EF3BD252764BB00D733C0 /* Styles.swift */,
 				D45EF3BF252764BB00D733C0 /* TweetFeed.swift */,
 				D45EF3BE252764BB00D733C0 /* VideoFeedView.swift */,
@@ -308,7 +308,7 @@
 				D45EF3E32527660A00D733C0 /* MoodCheckView.swift in Sources */,
 				D45EF3E52527660A00D733C0 /* MoodDetail.swift in Sources */,
 				D45EF3C2252764BC00D733C0 /* MentalFeed.swift in Sources */,
-				D45EF3C6252764BC00D733C0 /* Profile.swift in Sources */,
+				D45EF3C6252764BC00D733C0 /* Settings.swift in Sources */,
 				D45EF38A2527643900D733C0 /* ClarityApp.swift in Sources */,
 				D45EF3E12527660A00D733C0 /* MyMoodList .swift in Sources */,
 				D45EF3C3252764BC00D733C0 /* Styles.swift in Sources */,

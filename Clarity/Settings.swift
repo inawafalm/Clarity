@@ -12,63 +12,87 @@ import SwiftUI
 // Number of times you have chacked your mood
 // Stat for your mood.
 
-struct DashboardStruct : Identifiable {
+struct SettingStruct : Identifiable {
     
     var id: Int
     var title : String
+    var image: String
     
 }
 
-var DashboardData = [
-    DashboardStruct(id: 1, title: "Hi"),
-    DashboardStruct(id: 2, title: "Hi")
+var SettingsData = [
+    SettingStruct(id: 1, title: "Backup to iCloud", image: "square.and.arrow.down"),
+    SettingStruct(id: 2, title: "Notification", image: "bell"),
+    SettingStruct(id: 3, title: "Privacy & Security", image: "eye"),
+    SettingStruct(id: 4, title: "About", image: "questionmark.circle")
 ]
 
 
 struct Profile: View {
     
-    @State var pickerSelectedItem = 0
+    
+    @State var settingsArray = ["Backup to iCloud","Notification","Privacy & Security","Contact Us and Support","About"]
     
     var body: some View {
-        VStack {
-            Image("Nawaf")
-            .resizable()
-            .frame(width: 150, height: 150)
-            .clipShape(Circle())
-            .padding()
-            
-            Text("Nawaf Almutairi")
-                .fontWeight(.light)
-            
-            Button(action: {
+        
+        NavigationView {
+            NavigationLink(destination: Text("Hi")){
                 
-            }) {
-                Text("Edit Profile")
-                .foregroundColor(.white)
-                .buttonStyle(DbuttonChoiceStyle())
-                .padding()
+                List (SettingsData) { item in
+                    HStack {
+                        
+                        Image(systemName: item.image)
+                            .frame(width: 25, height: 25)
+                        Text(item.title)
+                            
+                            .foregroundColor(.black)
+                    }
+                }
+                .navigationBarTitle("Settings")
             }
-            Divider()
-            
-            Picker(selection: $pickerSelectedItem, label: Text("")){
-                Text("1").tag(0)
-                Text("2").tag(1)
-                Text("3").tag(2)
-
-            }.pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal,24)
-            
-            HStack(spacing: 30){
-                BarChart()
-                BarChart()
-                BarChart()
-                BarChart()
-                BarChart()
-            }.padding(.top,24)
-            
-            Spacer()
-            
         }
+        .listStyle(PlainListStyle())
+        
+        /*
+         VStack {
+         Image("Nawaf")
+         .resizable()
+         .frame(width: 150, height: 150)
+         .clipShape(Circle())
+         .padding()
+         
+         Text("Nawaf Almutairi")
+         .fontWeight(.light)
+         
+         Button(action: {
+         
+         }) {
+         Text("Edit Profile")
+         .foregroundColor(.white)
+         .buttonStyle(DbuttonChoiceStyle())
+         .padding()
+         }
+         Divider()
+         
+         Picker(selection: $pickerSelectedItem, label: Text("")){
+         Text("1").tag(0)
+         Text("2").tag(1)
+         Text("3").tag(2)
+         
+         }.pickerStyle(SegmentedPickerStyle())
+         .padding(.horizontal,24)
+         
+         HStack(spacing: 30){
+         BarChart()
+         BarChart()
+         BarChart()
+         BarChart()
+         BarChart()
+         }.padding(.top,24)
+         
+         Spacer()
+         }
+         */
         
     }
 }
@@ -76,17 +100,13 @@ struct Profile: View {
 struct Profilee_Previews: PreviewProvider {
     static var previews: some View {
         Profile()
-    }
-}
-
-struct Dash_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardGrid()
+        //DashboardGrid()
     }
 }
 
 
 
+/*
 struct DashboardGrid: View {
     
     var columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
@@ -137,15 +157,15 @@ struct DashboardGrid: View {
     
 }
 
-
+*/
 struct BarChart: View {
     var body: some View {
         VStack {
             ZStack(alignment: .bottom) {
                 Capsule().frame(width:30,height:200)
-                .foregroundColor(Color("Mywhite"))
+                    .foregroundColor(Color("Mywhite"))
                 Capsule().frame(width:30,height:100)
-                .foregroundColor(Color("Myblue"))
+                    .foregroundColor(Color("Myblue"))
             }
             Text("D").padding(.top,8)
         }

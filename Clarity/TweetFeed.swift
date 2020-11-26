@@ -57,7 +57,6 @@ struct testFeedView: View {
             // Grid
             ScrollView(.vertical, showsIndicators: false) {
                 
-                
                 HStack{
                     
                     Text("Articles")
@@ -65,7 +64,7 @@ struct testFeedView: View {
                         .foregroundColor(.black)
                     
                     Spacer()
-                    
+                    	
                     Button(action: {}) {
                         
                         Image(systemName: "person")
@@ -76,58 +75,63 @@ struct testFeedView: View {
                 // due to top area is ignored...
                 .padding([.horizontal,.top])
                 
-                LazyVGrid(columns: columns , spacing:25){
-                    ForEach(contentAppeared) { content in
-                        VStack(alignment: .leading, spacing: 10) {
-                            ZStack{
-                                
-                                // Image
-                                VStack {
-                                    Image(content.image)
-                                        .resizable()
-                                        .blur(radius: 0.8)
-                                        .aspectRatio(contentMode: .fit)
-                                        .matchedGeometryEffect(id: content.id, in: name)
-                                        .frame(width: 200, height: 200, alignment: .center)
+                ZStack {
+                    LazyVGrid(columns: columns , spacing:25){
+      
+                        ForEach(contentAppeared) { content in
+                            VStack(alignment: .leading, spacing: 10) {
+                                ZStack{
+                                    
+                                    // Image
+                                    VStack {
+                                        Image(content.image)
+                                            .resizable()
+                                            .blur(radius: 0.8)
+                                            .aspectRatio(contentMode: .fit)
+                                            .matchedGeometryEffect(id: content.id, in: name)
+                                            .frame(width: 200, height: 200, alignment: .center)
 
+                                        }
+                                        .padding()
+                                    
+                                    //SubTitle and Title
+                                    HStack {
+                                        Spacer()
+                                        VStack(alignment: .center, spacing: 0) {
+                                            Text(content.subTitle)
+                                                .font(.title3)
+                                                .foregroundColor(.white)
+                                                .fontWeight(.heavy)
+                                            
+                                            Text(content.title)
+                                                .font(.title2)
+                                                .fontWeight(.heavy)
+                                                .foregroundColor(.white)
+                                                .matchedGeometryEffect(id: content.title, in: name)
+                                            
+                                        }
+                                        Spacer()
                                     }
-                                    .padding()
-                                
-                                //SubTitle and Title
-                                HStack {
-                                    Spacer()
-                                    VStack(alignment: .center, spacing: 0) {
-                                        Text(content.subTitle)
-                                            .font(.title3)
-                                            .foregroundColor(.white)
-                                            .fontWeight(.heavy)
-                                        
-                                        Text(content.title)
-                                            .font(.title2)
-                                            .fontWeight(.heavy)
-                                            .foregroundColor(.white)
-                                            .matchedGeometryEffect(id: content.title, in: name)
-                                        
+                                    
+                                    .onTapGesture {
+                                        show.toggle()
+                                        selected = content
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                                            appear.toggle()
+                                        }
                                     }
-                                    Spacer()
                                 }
-                                
-                                .onTapGesture {
-                                    show.toggle()
-                                    selected = content
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                                        appear.toggle()
-                                    }
-                                }
+                                .background(Color("Myblue"))
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                        
                             }
-                            .background(Color("Myblue"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                    
                         }
                     }
-                }
 
-                .padding([.horizontal,.bottom])
+                    .padding([.horizontal,.bottom])
+                }
+                
+                
             }
             .padding(.top,UIApplication.shared.windows.first?.safeAreaInsets.top)
             
