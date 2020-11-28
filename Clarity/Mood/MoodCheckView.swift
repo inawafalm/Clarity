@@ -14,6 +14,9 @@ import SwiftUI
 
 struct MoodCheckView: View {
     
+    
+    
+    
     // Arrays start here.
     let moodArray =  [
         ["Wonderful","Excited","Happy"],
@@ -73,6 +76,7 @@ struct MoodCheckView: View {
     @State var expandCurrentPlace = false
     
     @State var currentMoment: String = ""
+    @State var selectedDate: String = ""
     
     // Switcher for mood
     @State private var firstButton = true
@@ -109,7 +113,7 @@ struct MoodCheckView: View {
                 VStack(alignment: .center, spacing: 20){
                     
                     
-                    
+                   // Progress Bar
                     HStack(){
                         // First Step
                        
@@ -144,10 +148,9 @@ struct MoodCheckView: View {
                     VStack(alignment: .center, spacing: 10) {
                         
                         // How Are you Q
-                        welcomingView()
+                        welcomingView(dateIs:selectedDate).animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
                         
                         // HStack has emoji
-                        
                         HStack {
                             VStack {
                                 if self.firstButton{
@@ -492,8 +495,14 @@ struct moodCheckingBar : View {
 
 struct welcomingView: View {
     
-    @State var selectedDate = Date()
-
+    @State private var selectedDate = Date()
+    @State var dateIs : String = ""
+    
+    static let formatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .long
+            return formatter
+        }()
     
     var body: some View {
         VStack {
@@ -502,11 +511,18 @@ struct welcomingView: View {
                 .font(.largeTitle)
             HStack{
                 Image(systemName:"calendar")
+                    .font(.title2)
                     .foregroundColor(Color("Myblue"))
-                Text("Saturday, May 9, 04:23")
-                    .underline()
-                    .font(.callout)
-                    .foregroundColor(Color("Myblue"))
+                DatePicker("", selection: $selectedDate).datePickerStyle(DefaultDatePickerStyle())
+                    .accentColor(Color("Myblue"))
+                    .labelsHidden()
+
+                
+            }
+    
+            .onAppear() {
+               // dateIs = Text("Task due date: \(selectedDate, formatter: Self.taskDateFormat)")
+                print(dateIs)
             }
         }.padding()
     }

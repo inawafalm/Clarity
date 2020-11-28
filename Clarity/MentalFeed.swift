@@ -34,8 +34,7 @@ struct MentalFeed: View {
     @State private var contentViewSelector: Int? = nil
     
     let contentArray = [
-        ["Psycological Tweets","Videos",],
-        ["Courses"]
+        ["Videos","Courses"]
     ]
     
     
@@ -125,7 +124,7 @@ struct MentalFeed: View {
                     })
                     
                      NavigationLink(destination: VideoFeedView(), isActive: self.$isPresentingVideo){EmptyView()}
-                    NavigationLink(destination: testFeedView(), isActive: self.$isPresentingTweet){EmptyView()}
+//                    NavigationLink(destination: testFeedView(), isActive: self.$isPresentingTweet){EmptyView()}
 
                     
                 }
