@@ -225,21 +225,3 @@ struct BarProgress: View {
 }
 
 
-
-// Customizing Emoji.
-struct EmojiMoodButton: View {
-    var colorName: String
-    var body: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(Color(colorName))
-                .shadow(radius: 3)
-                .frame(width: 50, height: 50)
-            
-            Image(colorName)
-                .resizable()
-                .frame(width: 45, height: 45)
-                .scaledToFill()
-        }
-    }
-}

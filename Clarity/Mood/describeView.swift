@@ -66,7 +66,7 @@ struct describeView: View {
 
                 Button(action: {
                     self.isPresented = false
-                    let item = moodStructure(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, whatHappenText: self.input, currentMoment: self.currentMoment)
+                    let item = moodStructure(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, whatHappenText: self.input, currentMoment: self.currentMoment, selectedDate: "")
                     print(item)
                     self.moodVM.moodArray.append(item)
                     

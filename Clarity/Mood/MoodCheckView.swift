@@ -13,10 +13,7 @@ import SwiftUI
 // background of button to white. // DONE
 
 struct MoodCheckView: View {
-    
-    
-    
-    
+
     // Arrays start here.
     let moodArray =  [
         ["Wonderful","Excited","Happy"],
@@ -103,13 +100,13 @@ struct MoodCheckView: View {
     @State var tapped2 = ""
     @State var tapped3 = ""
     @State var tapped4 = ""
+    
+    @State var feelingsArray = ["5","4","3","2","1"]
 
     
     var body: some View {
         
         NavigationView {
-            
-
                 VStack(alignment: .center, spacing: 20){
                     
                     
@@ -151,7 +148,7 @@ struct MoodCheckView: View {
                         welcomingView(dateIs:selectedDate).animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
                         
                         // HStack has emoji
-                        HStack {
+                       /* HStack {
                             VStack {
                                 if self.firstButton{
                                     EmojiMoodButton(colorName: "1")
@@ -274,7 +271,20 @@ struct MoodCheckView: View {
                                         .fontWeight(.bold)
                                 }
                             }
-                        }.animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
+                        }.animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))*/
+                        
+                        HStack{
+                            
+                            ForEach (feelingsArray, id:\.self) {item in
+                                EmojiMoodButton(colorName: item)
+                                    .onTapGesture {
+                                        self.tapped = "\(item)"
+                                        print(tapped)
+                                    }
+                                
+                            }
+                        }
+                        
 
                         VStack{
                             if self.currentMoment == "" {
@@ -420,9 +430,26 @@ struct MoodCheckView: View {
     
 }
 
+struct testViewCheck: View {
+    
+    @State var emojiArray = ["5","4","3","2","1"]
+    
+    var body: some View {
+        HStack{
+            
+            ForEach (emojiArray, id:\.self) {item in
+                EmojiMoodButton(colorName: item)
+            }
+            
+        }
+        
+    }
+}
+
 struct MoodCheckView_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheckView(moodVM: MoodViewModel(), isPresented: .constant(false))
+        testViewCheck()
     }
 }
 
@@ -516,8 +543,6 @@ struct welcomingView: View {
                 DatePicker("", selection: $selectedDate).datePickerStyle(DefaultDatePickerStyle())
                     .accentColor(Color("Myblue"))
                     .labelsHidden()
-
-                
             }
     
             .onAppear() {
@@ -537,7 +562,6 @@ struct buttonView: View {
     @State var currentMoment: String
     @ObservedObject var moodVM = MoodViewModel()
     @Binding var  isPresented: Bool
-    
     @State var tag:Int? = nil
 
     var body: some View {
@@ -558,5 +582,24 @@ struct buttonView: View {
         .onTapGesture(perform: {
             tag = 1
         })
+    }
+}
+
+
+// Customizing Emoji.
+struct EmojiMoodButton: View {
+    var colorName: String
+    var body: some View {
+        ZStack {
+            Circle()
+                .foregroundColor(Color(colorName))
+                .shadow(radius: 3)
+                .frame(width: 50, height: 50)
+            
+            Image(colorName)
+                .resizable()
+                .frame(width: 45, height: 45)
+                .scaledToFill()
+        }
     }
 }

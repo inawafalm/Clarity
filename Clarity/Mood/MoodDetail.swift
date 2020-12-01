@@ -13,7 +13,7 @@ import SwiftUI
 
 struct MoodDetail: View {
     
-    var moodDetail = moodStructure(currentMood: "", currentActivity: "", peopleWith: "", currentPlace: "", whatHappenText: "", currentMoment: "")
+    var moodDetail = moodStructure(currentMood: "", currentActivity: "", peopleWith: "", currentPlace: "", whatHappenText: "", currentMoment: "", selectedDate: "")
     @State var myText = ""
     @Binding var  isPresented: Bool
     @State private var AnimationShow = false
@@ -190,7 +190,7 @@ extension View {
 
 struct MoodDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MoodDetail(moodDetail: moodStructure(currentMood: "Happy", currentActivity: "Coding", peopleWith: "Alone", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "5"), isPresented: .constant(false))
+        MoodDetail(moodDetail: moodStructure(currentMood: "Happy", currentActivity: "Coding", peopleWith: "Alone", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
     }
 }
 

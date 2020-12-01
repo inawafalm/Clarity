@@ -122,6 +122,7 @@
 				D45EF3E92527661400D733C0 /* Mood */,
 				D45EF3C1252764BC00D733C0 /* ExerciceView.swift */,
 				D45EF3BC252764BB00D733C0 /* MentalFeed.swift */,
+				D42CE540254085530088D96F /* SwiftUITest.swift */,
 				D45EF3C0252764BB00D733C0 /* Settings.swift */,
 				D45EF3BD252764BB00D733C0 /* Styles.swift */,
 				D45EF3BF252764BB00D733C0 /* TweetFeed.swift */,
@@ -165,7 +166,6 @@
 				D45EF3DD2527660A00D733C0 /* describeView.swift */,
 				D45EF3DE2527660A00D733C0 /* MoodCheckView.swift */,
 				D45EF3E02527660A00D733C0 /* MoodDetail.swift */,
-				D42CE540254085530088D96F /* SwiftUITest.swift */,
 				D45EF3DC2527660A00D733C0 /* MyMoodList .swift */,
 			);
 			path = Mood;

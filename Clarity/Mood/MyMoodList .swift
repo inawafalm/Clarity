@@ -18,18 +18,19 @@ struct moodStructure: Identifiable {
     let currentPlace: String
     let whatHappenText: String
     let currentMoment: String
+    let selectedDate: String
 }
 
 //var myMoodArray : [moodStructure] = [moodStructure(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Hi", currentMoment: "5")]
 
 class MoodViewModel: ObservableObject {
     @Published var moodArray:  [moodStructure] = [
-        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3")
+        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3", selectedDate: "")
         ,
-        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "4"),
-        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3"),
-        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "2"),
-        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "1")]
+        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "4", selectedDate: ""),
+        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3", selectedDate: ""),
+        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "2", selectedDate: ""),
+        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "1", selectedDate: "")]
     
     /*
      {
