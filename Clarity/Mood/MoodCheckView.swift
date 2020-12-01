@@ -102,7 +102,7 @@ struct MoodCheckView: View {
     @State var tapped4 = ""
     
     @State var feelingsArray = ["5","4","3","2","1"]
-
+    @State var filteredFeelingsArray = ["5","4","3","2","1"]
     
     var body: some View {
         
@@ -148,7 +148,7 @@ struct MoodCheckView: View {
                         welcomingView(dateIs:selectedDate).animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
                         
                         // HStack has emoji
-                       /* HStack {
+                      /*  HStack {
                             VStack {
                                 if self.firstButton{
                                     EmojiMoodButton(colorName: "1")
@@ -271,18 +271,41 @@ struct MoodCheckView: View {
                                         .fontWeight(.bold)
                                 }
                             }
-                        }.animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))*/
+                        }.animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
+                        */
                         
                         HStack{
                             
-                            ForEach (feelingsArray, id:\.self) {item in
+                            ForEach (filteredFeelingsArray, id:\.self) {item in
                                 EmojiMoodButton(colorName: item)
                                     .onTapGesture {
                                         self.tapped = "\(item)"
                                         print(tapped)
+                                        
+                                        if tapped == "\(item)"
+                                        {
+                                            self.firstButton.toggle()
+                                        }
+                                        
+                                        if firstButton {
+                                            filteredFeelingsArray = filteredFeelingsArray.filter {$0 == "\(item)"}
+                                        } else {
+                                            filteredFeelingsArray = feelingsArray
+                                        }
+                                    
+                                        
+//                                        {
+//                                            filteredFeelingsArray = filteredFeelingsArray.filter {$0 == "\(item)"}
+//                                        } else {
+//                                            filteredFeelingsArray = feelingsArray
+//                                        }
+                                        
+                                        
                                     }
                                 
+                                
                             }
+                            
                         }
                         
 
