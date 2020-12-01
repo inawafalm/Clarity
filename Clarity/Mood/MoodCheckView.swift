@@ -76,11 +76,11 @@ struct MoodCheckView: View {
     @State var selectedDate: String = ""
     
     // Switcher for mood
-    @State private var firstButton = true
+    @State private var firstButton  = true
     @State private var secondButton = true
-    @State private var thirdButton = true
+    @State private var thirdButton  = true
     @State private var fourthButton = true
-    @State private var fifthButton = true
+    @State private var fifthButton  = true
     
     // Progress
     @State var precent: CGFloat = 0
@@ -103,6 +103,48 @@ struct MoodCheckView: View {
     
     @State var feelingsArray = ["5","4","3","2","1"]
     @State var filteredFeelingsArray = ["5","4","3","2","1"]
+    
+    func moodSwitcher(feelings: String){
+        
+        switch(feelings) {
+        case "1":
+            self.secondButton.toggle()
+            self.thirdButton.toggle()
+            self.fourthButton.toggle()
+            self.fifthButton.toggle()
+            if firstButton {
+                break
+            } else {
+                self.firstButton.toggle()
+            }
+        case "2":
+            self.firstButton.toggle()
+            self.secondButton = true
+            self.thirdButton.toggle()
+            self.fourthButton.toggle()
+            self.fifthButton.toggle()
+        case "3":
+            self.firstButton.toggle()
+            self.secondButton.toggle()
+            self.thirdButton = true
+            self.fourthButton.toggle()
+            self.fifthButton.toggle()
+        case "4":
+            self.firstButton.toggle()
+            self.secondButton.toggle()
+            self.thirdButton.toggle()
+            self.fourthButton = true
+            self.fifthButton.toggle()
+        case "5":
+            self.firstButton.toggle()
+            self.secondButton.toggle()
+            self.thirdButton.toggle()
+            self.fourthButton.toggle()
+            self.fifthButton = true
+        default: break
+        }
+        
+    }
     
     var body: some View {
         
@@ -275,7 +317,6 @@ struct MoodCheckView: View {
                         */
                         
                         HStack{
-                            
                             ForEach (filteredFeelingsArray, id:\.self) {item in
                                 EmojiMoodButton(colorName: item)
                                     .onTapGesture {
@@ -284,28 +325,23 @@ struct MoodCheckView: View {
                                         
                                         if tapped == "\(item)"
                                         {
-                                            self.firstButton.toggle()
+                                            switch item {
+                                            case "1":
+                                                <#code#>
+                                            default:
+                                                <#code#>
+                                            }
+                                            moodSwitcher(feelings: item)
                                         }
                                         
-                                        if firstButton {
+                                      /*  if firstButton {
                                             filteredFeelingsArray = filteredFeelingsArray.filter {$0 == "\(item)"}
                                         } else {
                                             filteredFeelingsArray = feelingsArray
-                                        }
-                                    
-                                        
-//                                        {
-//                                            filteredFeelingsArray = filteredFeelingsArray.filter {$0 == "\(item)"}
-//                                        } else {
-//                                            filteredFeelingsArray = feelingsArray
-//                                        }
-                                        
+                                        }*/
                                         
                                     }
-                                
-                                
                             }
-                            
                         }
                         
 
