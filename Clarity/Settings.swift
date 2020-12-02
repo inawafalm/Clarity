@@ -53,46 +53,6 @@ struct Profile: View {
         }
         .listStyle(PlainListStyle())
         
-        /*
-         VStack {
-         Image("Nawaf")
-         .resizable()
-         .frame(width: 150, height: 150)
-         .clipShape(Circle())
-         .padding()
-         
-         Text("Nawaf Almutairi")
-         .fontWeight(.light)
-         
-         Button(action: {
-         
-         }) {
-         Text("Edit Profile")
-         .foregroundColor(.white)
-         .buttonStyle(DbuttonChoiceStyle())
-         .padding()
-         }
-         Divider()
-         
-         Picker(selection: $pickerSelectedItem, label: Text("")){
-         Text("1").tag(0)
-         Text("2").tag(1)
-         Text("3").tag(2)
-         
-         }.pickerStyle(SegmentedPickerStyle())
-         .padding(.horizontal,24)
-         
-         HStack(spacing: 30){
-         BarChart()
-         BarChart()
-         BarChart()
-         BarChart()
-         BarChart()
-         }.padding(.top,24)
-         
-         Spacer()
-         }
-         */
         
     }
 }
