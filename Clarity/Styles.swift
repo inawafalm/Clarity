@@ -22,6 +22,7 @@ struct textChoiceStyle: ViewModifier {
     }
 }
 
+
 struct textChoiceStyle2: ViewModifier {
     
     @State var tapped = ""
@@ -31,7 +32,6 @@ struct textChoiceStyle2: ViewModifier {
         content
             .padding(.all, 10.0)
             .contentShape(Rectangle())
-           // .foregroundColor(Color("Myblue"))
             .foregroundColor(tapped == moodData ? Color("Mywhite"): Color("Myblue"))
             .background(tapped == moodData ? Color("Myblue"): Color("Mywhite"))
             .cornerRadius(20)
