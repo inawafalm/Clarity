@@ -57,7 +57,7 @@ struct MoodCheckView: View {
         "Who  are you with ?",
         "Where are you ?"]
     
-    // Vars
+    // Varss
     @State var currentMood: String = ""
     @State var currentActivity: String = ""
     @State var peopleWith: String = ""
