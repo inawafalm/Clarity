@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05C75B69257E047E008AFFD3 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 05C75B68257E047E008AFFD3 /* PartialSheet */; };
 		D42CE541254085530088D96F /* SwiftUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CE540254085530088D96F /* SwiftUITest.swift */; };
 		D45EF38A2527643900D733C0 /* ClarityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF3892527643900D733C0 /* ClarityApp.swift */; };
 		D45EF38E2527643900D733C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D45EF38D2527643900D733C0 /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05C75B69257E047E008AFFD3 /* PartialSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +189,9 @@
 			dependencies = (
 			);
 			name = Clarity;
+			packageProductDependencies = (
+				05C75B68257E047E008AFFD3 /* PartialSheet */,
+			);
 			productName = Clarity;
 			productReference = D45EF3862527643800D733C0 /* Clarity.app */;
 			productType = "com.apple.product-type.application";
@@ -258,6 +263,9 @@
 				Base,
 			);
 			mainGroup = D45EF37D2527643800D733C0;
+			packageReferences = (
+				05C75B67257E047E008AFFD3 /* XCRemoteSwiftPackageReference "PartialSheet" */,
+			);
 			productRefGroup = D45EF3872527643800D733C0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -632,6 +640,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		05C75B67257E047E008AFFD3 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.11;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		05C75B68257E047E008AFFD3 /* PartialSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 05C75B67257E047E008AFFD3 /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			productName = PartialSheet;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D45EF37E2527643800D733C0 /* Project object */;
 }
