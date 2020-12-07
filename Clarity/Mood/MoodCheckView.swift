@@ -62,7 +62,6 @@ struct MoodCheckView: View {
     @State var currentActivity: String = ""
     @State var peopleWith: String = ""
     @State var currentPlace: String = ""
-    
     //Date
     @State var currentMoment: String = ""
     @State var selectedDate: String = ""
@@ -197,13 +196,14 @@ struct MoodCheckView: View {
                     }
                     .frame(width:UIScreen.main.bounds.width,height: 300)
                     .background(Color.primary.colorInvert()).cornerRadius(50)
-                    .edgesIgnoringSafeArea(.all)
+                    
                 }
-            }                .navigationBarTitle("Add Mode",displayMode: .inline)
-            
-            
-            
+                
+            }
+            .navigationBarTitle("Add Mode",displayMode: .inline)
+            .edgesIgnoringSafeArea(.bottom)
         }
+        
     }
     
     
