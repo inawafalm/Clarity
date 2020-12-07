@@ -74,9 +74,16 @@ struct MoodCheckView: View {
     
     // Fourth
     @State var buttonText4: String = ""
+=======
+    // Vars
+    @State var currentMood: String = ""
+    @State var currentActivity: String = ""
+    @State var peopleWith: String = ""
+>>>>>>> 29d1ff797d180d79a0bbb10560b9b5ec445cd7e0
     @State var currentPlace: String = ""
     @State var expandCurrentPlace = false
     
+    //Date
     @State var currentMoment: String = ""
     @State var selectedDate: String = ""
     
@@ -98,18 +105,21 @@ struct MoodCheckView: View {
         GridItem(.fixed(30)),
         GridItem(.fixed(30))
     ]
+<<<<<<< HEAD
+=======
+
+>>>>>>> 29d1ff797d180d79a0bbb10560b9b5ec445cd7e0
     
     var body: some View {
         
         NavigationView {
             VStack(alignment: .center, spacing: 20){
-                
-                
                 // Mood Selective.
                 VStack(alignment: .center, spacing: 10) {
                     
                     // How Are you Q
                     welcomingView(dateIs:selectedDate).animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
+                        //.animation(.spring(response: 0.4, dampingFraction: 0, blendDuration: 1.0))
                     
                     // HStack has emoji
                     HStack{
@@ -122,122 +132,123 @@ struct MoodCheckView: View {
                                         filteredFeelingsArray = feelingsArray
                                     } else {
                                         filteredFeelingsArray = filteredFeelingsArray.filter {$0 == "\(item)"}
-                                        
                                     }
                                 }
                         }
+<<<<<<< HEAD
+                    }//.animation(.easeIn)
+=======
                     }.animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
-                    
-                    
-                    
-                    
+>>>>>>> 29d1ff797d180d79a0bbb10560b9b5ec445cd7e0
                     
                     VStack{
-                        if self.currentMoment != "" {
+                        if self.currentMoment == "" {
                             
                             
                         } else {
                             moodCheckingBar(selected: self.$selected)
-                                .padding()
-                                .animation(Animation.easeIn.delay(0.3))
+                                .padding(.top)
+                                //.animation(Animation.easeIn.delay(0.3))
                             VStack {
                                 if self.selected == 0 {
                                     moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood)
-                                    
+                                        .onAppear() {
+                                            self.selected = 0
+                                        }
                                     
                                 } else if self.selected == 1 {
-                                    VStack (spacing: 5){
-                                        ForEach(self.activityArray, id: \.self) { row in
-                                            HStack (spacing: 5){
-                                                ForEach(row, id: \.self) { moodData in
-                                                    Text(moodData)
-                                                        .padding(.all, 10.0)
-                                                        .contentShape(Rectangle())
-                                                        .foregroundColor(self.tapped2 == moodData ? Color("Mywhite"): Color("Myblue"))
-                                                        .background(self.tapped2 == moodData ? Color("Myblue"): Color("Mywhite"))
-                                                        .cornerRadius(20)
-                                                        .shadow(radius: 5)
-                                                        .onTapGesture {
-                                                            self.tapped2 = moodData
-                                                            self.currentActivity = moodData
-                                                            print(moodData)
-                                                            print(self.currentActivity)
-                                                            self.expandActivity.toggle()
-                                                            
-                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                                self.selected = self.selected + 1
-                                                            }
-                                                            
-                                                        }
-                                                }
-                                            }
-                                        }
-                                    }
+<<<<<<< HEAD
+                                    moodCheckSelection(selectedArray:activityArray,tapped: tapped, moodData: "", topic: self.currentMood)
                                 } else if self.selected == 2 {
-                                    VStack (spacing: 5){
-                                        ForEach(self.peopleArray, id: \.self) { row in
-                                            HStack (spacing: 5){
-                                                ForEach(row, id: \.self) { moodData in
-                                                    Text(moodData)
-                                                        .padding(.all, 10.0)
-                                                        .contentShape(Rectangle())
-                                                        .foregroundColor(self.tapped3 == moodData ? Color("Mywhite"): Color("Myblue"))
-                                                        .background(self.tapped3 == moodData ? Color("Myblue"): Color("Mywhite"))
-                                                        .cornerRadius(20)
-                                                        .shadow(radius: 5)
-                                                        .onTapGesture {
-                                                            self.tapped3 = moodData
-                                                            self.peopleWith = moodData
-                                                            print(moodData)
-                                                            print(self.peopleWith)
-                                                            self.expandPeopleWith.toggle()
-                                                            
-                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                                self.selected = self.selected + 1
-                                                            }
-                                                            
-                                                        }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    moodCheckSelection(selectedArray:peopleArray,tapped: tapped, moodData: "", topic: self.currentMood)
                                 } else if self.selected == 3 {
-                                    VStack (spacing: 5){
-                                        ForEach(self.placeArray, id: \.self) { row in
-                                            HStack (spacing: 5){
-                                                ForEach(row, id: \.self) { moodData in
-                                                    Text(moodData)
-                                                        .padding(.all, 10.0)
-                                                        .contentShape(Rectangle())
-                                                        .foregroundColor(self.tapped4 == moodData ? Color("Mywhite"): Color("Myblue"))
-                                                        .background(self.tapped4 == moodData ? Color("Myblue"): Color("Mywhite"))
-                                                        .cornerRadius(20)
-                                                        .shadow(radius: 5)
-                                                        .onTapGesture {
-                                                            self.tapped4 = moodData
-                                                            self.currentPlace = moodData
-                                                            print(moodData)
-                                                            print(self.currentPlace)
-                                                        }
-                                                }
-                                            }
+                                    moodCheckSelection(selectedArray:placeArray,tapped: tapped, moodData: "", topic: self.currentMood)
+=======
+                                    
+                                    moodCheckSelection(selectedArray:activityArray,tapped: tapped2, moodData: "", topic: self.currentActivity)
+                                        .onAppear() {
+                                            self.selected = 1
                                         }
-                                    }
+                                   
+                                } else if self.selected == 2 {
+                                    
+                                    moodCheckSelection(selectedArray:peopleArray,tapped: tapped3, moodData: "", topic: self.peopleWith)
+                                        .onAppear() {
+                                            self.selected = 2
+                                        }
+                                    
+                                } else if self.selected == 3 {
+                                    
+                                    moodCheckSelection(selectedArray:placeArray,tapped: tapped4, moodData: "", topic: self.currentPlace)
+                                        .onAppear() {
+                                            self.selected = 3
+                                        }
+>>>>>>> 29d1ff797d180d79a0bbb10560b9b5ec445cd7e0
                                 }
                             }
                             .padding()
                             .background(Color("Myblue"))
                             .cornerRadius(20)
+                            
+<<<<<<< HEAD
+                            VStack(spacing: 12) {
+                                Image(systemName: "chevron.right.circle.fill")
+                                    .foregroundColor(Color("Myblue"))
+                                    .font(.system(size: 50))
+                                Text("Next")
+                                    .foregroundColor(Color("Myblack"))
+                                    .font(.footnote)
+                                    .bold()
+                            }
+                            .onTapGesture(perform: {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                 self.selected = self.selected + 1
+                                }
+                            })
                         }
+                        
+                        
+                    }
+                   // .animation(.easeOut)
+                    
+                    /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                     self.selected = self.selected + 1
+                 }*/
+                    
+                   
+                    
+                    if self.currentPlace != "" {
+                        buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
+=======
+                            if selected < 3 {
+                                
+                                VStack {
+                                    Image(systemName: "chevron.right.circle.fill")
+                                        .foregroundColor(Color("Myblue"))
+                                        .font(.system(size: 50))
+                                    Text("Next")
+                                        .foregroundColor(Color("Myblack"))
+                                        .font(.footnote)
+                                        .bold()
+                                }
+                                .onTapGesture {
+                                    self.selected = selected + 1
+                                }
+                            } else {
+                                if self.currentPlace == "" {
+                                    
+                                    buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
+                                }
+                            }
+                        }
+                        
+>>>>>>> 29d1ff797d180d79a0bbb10560b9b5ec445cd7e0
                     }
                     .animation(.spring())
-                    if self.currentPlace == "" {
-                        
-                        buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
-                    }
                     Spacer()
                 }
             }
+            .animation(.easeIn)
             .navigationBarTitle("Add Mode",displayMode: .inline)
         }
     }
@@ -269,7 +280,7 @@ struct moodCheckingBar : View {
                 Text("Mood")
                     .bold()
                     .padding(.vertical,12)
-                    .padding(.horizontal,8)
+                    .padding(.horizontal,15)
                     .background(self.selected == 0 ?  Color("Mywhite") : Color.clear)
                     .clipShape(Capsule())
                 
@@ -315,7 +326,7 @@ struct moodCheckingBar : View {
         }
         .padding(4).background(Color("Myblue"))
         .clipShape(Capsule())
-        .animation(Animation.default)
+        //.animation(Animation.default)
         
     }
 }
@@ -329,15 +340,10 @@ struct moodCheckSelection : View {
     
     
     var body : some View {
-       
-        
-        
         VStack (spacing: 5){
             ForEach(selectedArray, id: \.self) { row in
                 HStack (spacing: 5){
                     ForEach(row, id: \.self) { moodData in
-                        
-                       
                         Text(moodData)
                             .padding(.all, 10.0)
                             .contentShape(Rectangle())
@@ -410,15 +416,15 @@ struct buttonView: View {
             EmptyView()
         }
         
-        VStack(spacing: 12) {
+        VStack {
             Image(systemName: "chevron.right.circle.fill")
                 .foregroundColor(Color("Myblue"))
                 .font(.system(size: 50))
-            Text("Continue")
+            Text("Done")
                 .foregroundColor(Color("Myblack"))
                 .font(.footnote)
                 .bold()
-        }.padding()
+        }
         .onTapGesture(perform: {
             tag = 1
         })
