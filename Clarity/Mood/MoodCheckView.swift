@@ -75,21 +75,30 @@ struct MoodCheckView: View {
     @State var tapped2 = ""
     @State var tapped3 = ""
     @State var tapped4 = ""
+    @State var flag = false
     
     @State var feelingsArray = ["1","2","3","4","5"]
     @State var filteredFeelingsArray = ["1","2","3","4","5"]
     
-
+    
     
     var body: some View {
         
         NavigationView {
-            VStack(alignment: .center, spacing: 20){
-                // Mood Selective.
-                VStack(alignment: .center, spacing: 10) {
+            // Mood Selective.
+            
+            ZStack (alignment: .bottom) {
+                VStack(alignment: .center) {
                     
                     // How Are you Q
                     welcomingView(dateIs:selectedDate).animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
+                    
+                    
+                    Text("Hiiiii")
+                        .onTapGesture{
+                            flag.toggle()
+                        }
+                    
                     
                     // HStack has emoji
                     HStack{
@@ -129,7 +138,7 @@ struct MoodCheckView: View {
                                         .onAppear() {
                                             self.selected = 1
                                         }
-                                   
+                                    
                                 } else if self.selected == 2 {
                                     
                                     moodCheckSelection(selectedArray:peopleArray,tapped: tapped3, moodData: "", topic: self.peopleWith)
@@ -175,8 +184,25 @@ struct MoodCheckView: View {
                     .animation(.spring())
                     Spacer()
                 }
-            }
-            .navigationBarTitle("Add Mode",displayMode: .inline)
+                
+                if flag {
+                    Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all)
+                    VStack {
+                        Text("label")
+                        Button(action: {
+                            self.flag.toggle()
+                        }) {
+                            Text("Close")
+                        }
+                    }
+                    .frame(width:UIScreen.main.bounds.width,height: 300)
+                    .background(Color.primary.colorInvert()).cornerRadius(50)
+                    .edgesIgnoringSafeArea(.all)
+                }
+            }                .navigationBarTitle("Add Mode",displayMode: .inline)
+            
+            
+            
         }
     }
     
@@ -188,7 +214,6 @@ struct MoodCheckView: View {
 struct MoodCheckView_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheckView(moodVM: MoodViewModel(), isPresented: .constant(false))
-        moodCheckSelection(selectedArray:[[""]],tapped: "", moodData: "", topic: "")
     }
 }
 
@@ -267,7 +292,7 @@ struct moodCheckSelection : View {
     
     
     var body : some View {
-       
+        
         
         
         VStack (spacing: 5){
@@ -275,7 +300,7 @@ struct moodCheckSelection : View {
                 HStack (spacing: 5){
                     ForEach(row, id: \.self) { moodData in
                         
-                       
+                        
                         Text(moodData)
                             .padding(.all, 10.0)
                             .contentShape(Rectangle())
@@ -302,6 +327,7 @@ struct welcomingView: View {
     
     @State private var selectedDate = Date()
     @State var dateIs : String = ""
+    @State var flag = false
     
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -310,26 +336,42 @@ struct welcomingView: View {
     }()
     
     var body: some View {
+        
         VStack {
             Text("How are you?")
                 .foregroundColor(Color("Myblack"))
                 .font(.largeTitle)
+            
             HStack{
                 Image(systemName:"calendar")
                     .font(.title2)
                     .foregroundColor(Color("Myblue"))
-                DatePicker("", selection: $selectedDate).datePickerStyle(DefaultDatePickerStyle())
-                    .accentColor(Color("Myblue"))
-                    .labelsHidden()
+                
+                Text("Date")
+                    .onTapGesture {
+                        flag.toggle()
+                    }
+                /*DatePicker("", selection: $selectedDate)
+                 
+                 //.datePickerStyle(DefaultDatePickerStyle())
+                 .accentColor(Color("Myblue"))
+                 .labelsHidden()*/
+                
             }
-            
+            //.offset(y: -15.0)
             .onAppear() {
                 // dateIs = Text("Task due date: \(selectedDate, formatter: Self.taskDateFormat)")
                 print(dateIs)
-            }
-        }.padding()
+            }.padding()
+            
+        }.padding(.top)
+        
+        
     }
 }
+
+
+
 
 struct buttonView: View {
     
@@ -388,3 +430,5 @@ struct EmojiMoodButton: View {
         }
     }
 }
+
+

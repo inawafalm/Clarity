@@ -19,29 +19,11 @@ struct SwiftUITest: View {
     @State var show = false
     @State var indexArray: Int?
     @State var selectedMood: testStruct? = nil
-    
+    @State private var selectedDate = Date()
+
     var body: some View {
         
-        List {
-            ForEach(Array(arrayTest.enumerated()), id: \.1.id) { (index , item) in
-                VStack {
-                    Text(item.name)
-                        .bold()
-                        .padding(20)
-                    Text("\(index)")
-                }
-                .onTapGesture{
-                    indexArray = index
-                    selectedMood = item
-                    self.show.toggle()
-                }
-            }
-           
-        }
-        .sheet(item: self.$selectedMood) { mood in
-            SwiftUITest2(isPresented: $show, text: mood.name)
-        }
-        
+        DatePicker("", selection: $selectedDate)
         
     }
 }
@@ -65,7 +47,6 @@ struct SwiftUITest2: View {
 struct SwiftUITest_Previews: PreviewProvider {
     static var previews: some View {
         SwiftUITest()
-        SwiftUITest2(isPresented: .constant(false), text: "")
     }
 }
 
