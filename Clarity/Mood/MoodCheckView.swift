@@ -90,13 +90,28 @@ struct MoodCheckView: View {
                 VStack(alignment: .center) {
                     
                     // How Are you Q
-                    welcomingView(dateIs:selectedDate).animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
+                    
+                    Text("How are you?")
+                        .foregroundColor(Color("Myblack"))
+                        .font(.largeTitle)
+                    
+                    //welcomingView().animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
                     
                     
-                    Text("Hiiiii")
-                        .onTapGesture{
-                            flag.toggle()
-                        }
+                    HStack {
+                        Image(systemName:"calendar")
+                            .font(.title2)
+                            .foregroundColor(Color("Myblue"))
+                        Text("11/18/1997")
+                            //.Underline()
+                            .foregroundColor(Color("Myblue"))
+                    }
+                    
+                    Button(action: {
+                            self.flag.toggle()
+                    }) {
+                        Text("Close")
+                    }
                     
                     
                     // HStack has emoji
@@ -185,23 +200,13 @@ struct MoodCheckView: View {
                 }
                 
                 if flag {
-                    Color.gray.opacity(0.4).edgesIgnoringSafeArea(.all)
-                    VStack {
-                        Text("label")
-                        Button(action: {
-                            self.flag.toggle()
-                        }) {
-                            Text("Close")
-                        }
-                    }
-                    .frame(width:UIScreen.main.bounds.width,height: 300)
-                    .background(Color.primary.colorInvert()).cornerRadius(50)
-                    
+                    CustomCalender(flag: $flag).zIndex(0)
                 }
                 
             }
             .navigationBarTitle("Add Mode",displayMode: .inline)
             .edgesIgnoringSafeArea(.bottom)
+            .animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
         }
         
     }
@@ -214,6 +219,7 @@ struct MoodCheckView: View {
 struct MoodCheckView_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheckView(moodVM: MoodViewModel(), isPresented: .constant(false))
+        CustomCalender(flag: .constant(true))
     }
 }
 
@@ -325,8 +331,6 @@ struct moodCheckSelection : View {
 
 struct welcomingView: View {
     
-    @State private var selectedDate = Date()
-    @State var dateIs : String = ""
     @State var flag = false
     
     static let formatter: DateFormatter = {
@@ -347,21 +351,12 @@ struct welcomingView: View {
                     .font(.title2)
                     .foregroundColor(Color("Myblue"))
                 
-                Text("Date")
-                    .onTapGesture {
-                        flag.toggle()
-                    }
-                /*DatePicker("", selection: $selectedDate)
-                 
-                 //.datePickerStyle(DefaultDatePickerStyle())
-                 .accentColor(Color("Myblue"))
-                 .labelsHidden()*/
+        
                 
             }
-            //.offset(y: -15.0)
             .onAppear() {
                 // dateIs = Text("Task due date: \(selectedDate, formatter: Self.taskDateFormat)")
-                print(dateIs)
+                //print(dateIs)
             }.padding()
             
         }.padding(.top)
@@ -369,9 +364,6 @@ struct welcomingView: View {
         
     }
 }
-
-
-
 
 struct buttonView: View {
     
@@ -405,7 +397,6 @@ struct buttonView: View {
     }
 }
 
-
 // Customizing Emoji.
 struct EmojiMoodButton: View {
     var colorName: String
@@ -428,6 +419,43 @@ struct EmojiMoodButton: View {
                 .font(.footnote)
                 .fontWeight(.bold)
         }
+    }
+}
+
+struct CustomCalender: View {
+    
+    @Binding var flag : Bool
+    @State private var selectedDate = Date()
+    @State var dateIs : String = ""
+    
+    static let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }()
+    
+    var body: some View {
+        
+        Color.gray.opacity(0.7).edgesIgnoringSafeArea(.all)
+            .onTapGesture {
+                self.flag.toggle()
+            }
+        VStack {
+            
+            Spacer()
+            DatePicker("", selection: $selectedDate)
+             .datePickerStyle(WheelDatePickerStyle())
+             .labelsHidden()
+            Button(action: {
+                    self.flag.toggle()
+            }) {
+                Text("Done")
+            }
+            .padding()
+        }.transition(.move(edge: .bottom))
+            
+        .frame(width:UIScreen.main.bounds.width,height: 300)
+        .background(Color.primary.colorInvert()).cornerRadius(50)
     }
 }
 
