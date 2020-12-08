@@ -89,29 +89,7 @@ struct MoodCheckView: View {
             ZStack (alignment: .bottom) {
                 VStack(alignment: .center) {
                     
-                    // How Are you Q
-                    
-                    Text("How are you?")
-                        .foregroundColor(Color("Myblack"))
-                        .font(.largeTitle)
-                    
-                    //welcomingView().animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
-                    
-                    
-                    HStack {
-                        Image(systemName:"calendar")
-                            .font(.title2)
-                            .foregroundColor(Color("Myblue"))
-                        Text("11/18/1997")
-                            //.Underline()
-                            .foregroundColor(Color("Myblue"))
-                    }
-                    
-                    Button(action: {
-                            self.flag.toggle()
-                    }) {
-                        Text("Close")
-                    }
+                   // welcomingView(flag)
                     
                     
                     // HStack has emoji
@@ -198,7 +176,6 @@ struct MoodCheckView: View {
                     .animation(.spring())
                     Spacer()
                 }
-                
                 if flag {
                     CustomCalender(flag: $flag).zIndex(0)
                 }
@@ -219,7 +196,7 @@ struct MoodCheckView: View {
 struct MoodCheckView_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheckView(moodVM: MoodViewModel(), isPresented: .constant(false))
-        CustomCalender(flag: .constant(true))
+        //CustomCalender(flag: .constant(true))
     }
 }
 
@@ -331,7 +308,9 @@ struct moodCheckSelection : View {
 
 struct welcomingView: View {
     
-    @State var flag = false
+    @Binding var flag : Bool
+    @State private var selectedDate = Date()
+    @State var dateIs : String = ""
     
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -346,14 +325,20 @@ struct welcomingView: View {
                 .foregroundColor(Color("Myblack"))
                 .font(.largeTitle)
             
-            HStack{
+            HStack {
                 Image(systemName:"calendar")
                     .font(.title2)
                     .foregroundColor(Color("Myblue"))
-                
-        
-                
+                Text(dateIs)
+                    .font(.title2)
+                    .foregroundColor(Color("Myblue"))
+                    .underline()
+                    
+                    .onTapGesture{
+                        self.flag.toggle()
+                    }
             }
+            .padding(5)
             .onAppear() {
                 // dateIs = Text("Task due date: \(selectedDate, formatter: Self.taskDateFormat)")
                 //print(dateIs)
@@ -444,16 +429,16 @@ struct CustomCalender: View {
             
             Spacer()
             DatePicker("", selection: $selectedDate)
-             .datePickerStyle(WheelDatePickerStyle())
-             .labelsHidden()
+                .datePickerStyle(WheelDatePickerStyle())
+                .labelsHidden()
             Button(action: {
-                    self.flag.toggle()
+                self.flag.toggle()
             }) {
                 Text("Done")
             }
             .padding()
         }.transition(.move(edge: .bottom))
-            
+        
         .frame(width:UIScreen.main.bounds.width,height: 300)
         .background(Color.primary.colorInvert()).cornerRadius(50)
     }
