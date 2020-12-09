@@ -12,6 +12,11 @@ import SwiftUI
 // Date view, maybe it shows from buttom page.
 // background of button to white. // DONE
 
+struct selectionStruct: Identifiable {
+    var id: Int
+    var selection: String
+}
+
 struct MoodCheckView: View {
     
     // Arrays start here.
@@ -134,31 +139,26 @@ struct MoodCheckView: View {
                         }
                     }.animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
                     
+                    // Selection
                     VStack{
                         if self.currentMoment == "" {
-                            
-                            
                         } else {
                             moodCheckingBar(selected: self.$selected)
                                 .padding()
                                 .animation(Animation.easeIn.delay(0.3))
                             VStack {
                                 if self.selected == 0 {
-                                    moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood)
+                                    moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood,testArray: currentMoodArray)
                                         .onAppear() {
                                             self.selected = 0
                                         }
                                     
-                                    
                                 } else if self.selected == 1 {
-                                    
                                     moodCheckSelection(selectedArray:activityArray,tapped: tapped2, moodData: "", topic: self.currentActivity)
                                         .onAppear() {
                                             self.selected = 1
                                         }
-                                    
                                 } else if self.selected == 2 {
-                                    
                                     moodCheckSelection(selectedArray:peopleArray,tapped: tapped3, moodData: "", topic: self.peopleWith)
                                         .onAppear() {
                                             self.selected = 2
@@ -339,6 +339,8 @@ struct moodCheckSelection : View {
     @State var tapped : String
     @State var moodData : String
     @State var topic : String
+    @State var testArray = []
+    var index = 0
     
     
     var body : some View {
@@ -358,9 +360,16 @@ struct moodCheckSelection : View {
                             .shadow(radius: 5)
                             .onTapGesture {
                                 self.tapped = moodData
+                                testArray.insert(tapped, at: mood)
+                                
+                                
+                                self.tapped = moodData
                                 self.topic = moodData
                                 print(moodData)
                                 print(self.topic)
+                                
+                                self.testArray.append(tapped)
+                                
                             }
                     }
                 }
@@ -370,46 +379,6 @@ struct moodCheckSelection : View {
     }
     
 }
-
-struct welcomingView: View {
-    
-    @Binding var flag : Bool
-    @State private var selectedDate = Date()
-    @State var dateIs : String = ""
-    let now = Date()
-    
-    
-    var body: some View {
-        
-        VStack {
-            Text("How are you?")
-                .foregroundColor(Color("Myblack"))
-                .font(.largeTitle)
-            
-            HStack {
-                Image(systemName:"calendar")
-                    .font(.title2)
-                    .foregroundColor(Color("Myblue"))
-                Text("123213213")
-                    .font(.title2)
-                    .foregroundColor(Color("Myblue"))
-                    .underline()
-                    .onTapGesture{
-                        self.flag.toggle()
-                    }
-            }
-            .padding(5)
-            .onAppear() {
-                // dateIs = Text("Task due date: \(selectedDate, formatter: Self.taskDateFormat)")
-                //print(dateIs)
-            }.padding()
-            
-        }.padding(.top)
-        
-        
-    }
-}
-
 
 struct CustomCalender: View {
     
@@ -446,8 +415,6 @@ struct CustomCalender: View {
         .background(Color.primary.colorInvert()).cornerRadius(50)
     }
 }
-
-
 
 struct buttonView: View {
     
