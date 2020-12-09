@@ -57,14 +57,15 @@ struct MoodCheckView: View {
         "Who  are you with ?",
         "Where are you ?"]
     
-    // Varsa
+    // Vars
     @State var currentMood: String = ""
+    @State var currentMoodArray = []
     @State var currentActivity: String = ""
     @State var peopleWith: String = ""
     @State var currentPlace: String = ""
     //Date
     @State var currentMoment: String = ""
-    @State var selectedDate: String = ""
+    //@State var selectedDate: String = ""
     
     
     @ObservedObject var moodVM: MoodViewModel
@@ -75,11 +76,18 @@ struct MoodCheckView: View {
     @State var tapped3 = ""
     @State var tapped4 = ""
     @State var flag = false
-    
+    @State var selectedDate = Date()
+    @State var holdingDate = Date()
     @State var feelingsArray = ["1","2","3","4","5"]
     @State var filteredFeelingsArray = ["1","2","3","4","5"]
     
     
+    static let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
     
     var body: some View {
         
@@ -89,7 +97,25 @@ struct MoodCheckView: View {
             ZStack (alignment: .bottom) {
                 VStack(alignment: .center) {
                     
-                   // welcomingView(flag)
+                    //welcomingView(flag: $flag)
+                    Text("How are you?")
+                        .font(.title)
+                        .foregroundColor(Color("Myblack"))
+                        .padding(.top,50)
+                    
+                    HStack {
+                        Image(systemName:"calendar")
+                            .font(.title2)
+                            .foregroundColor(Color("Myblue"))
+                        Text(MoodCheckView.formatter.string(from: selectedDate))
+                            .font(.headline)
+                            .foregroundColor(Color("Myblue"))
+                            .underline()
+                            .onTapGesture{
+                                self.flag.toggle()
+                            }
+                    }
+                    .padding(5)
                     
                     
                     // HStack has emoji
@@ -177,7 +203,48 @@ struct MoodCheckView: View {
                     Spacer()
                 }
                 if flag {
-                    CustomCalender(flag: $flag).zIndex(0)
+                    //CustomCalender(flag: $flag,selectedDate:selectedDate).zIndex(0)
+                    Color.gray.opacity(0.7).edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            self.flag.toggle()
+                        }
+                    VStack {
+                        
+                        
+                        HStack {
+                            Button(action: {
+                                self.flag.toggle()
+                            }) {
+                                Text("Cancel")
+                                    .foregroundColor(Color.white)
+
+                            }
+                            .padding()
+                            .padding(.horizontal,5)
+                            Spacer()
+                            Button(action: {
+                                self.flag.toggle()
+                                self.selectedDate = self.holdingDate
+                            }) {
+                                Text("Done")
+                                    .foregroundColor(Color.white)
+                                    .bold()
+                            }
+                            .padding()
+                            .padding(.horizontal,5)
+                            
+                        }.background(Color("Myblue"))
+                        
+                        DatePicker("", selection: $holdingDate)
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                        Spacer()
+                        
+                    }
+                    .transition(.move(edge: .bottom))
+                    .frame(width:UIScreen.main.bounds.width,height: 300)
+                    .background(Color.primary.colorInvert()).cornerRadius(50)
+                    .zIndex(0)
                 }
                 
             }
@@ -275,9 +342,7 @@ struct moodCheckSelection : View {
     
     
     var body : some View {
-        
-        
-        
+
         VStack (spacing: 5){
             ForEach(selectedArray, id: \.self) { row in
                 HStack (spacing: 5){
@@ -311,12 +376,8 @@ struct welcomingView: View {
     @Binding var flag : Bool
     @State private var selectedDate = Date()
     @State var dateIs : String = ""
+    let now = Date()
     
-    static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        return formatter
-    }()
     
     var body: some View {
         
@@ -329,11 +390,10 @@ struct welcomingView: View {
                 Image(systemName:"calendar")
                     .font(.title2)
                     .foregroundColor(Color("Myblue"))
-                Text(dateIs)
+                Text("123213213")
                     .font(.title2)
                     .foregroundColor(Color("Myblue"))
                     .underline()
-                    
                     .onTapGesture{
                         self.flag.toggle()
                     }
@@ -349,6 +409,45 @@ struct welcomingView: View {
         
     }
 }
+
+
+struct CustomCalender: View {
+    
+    @Binding var flag : Bool
+    @State var selectedDate = Date()
+    
+    static let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }()
+    
+    var body: some View {
+        
+        Color.gray.opacity(0.7).edgesIgnoringSafeArea(.all)
+            .onTapGesture {
+                self.flag.toggle()
+            }
+        VStack {
+            
+            Spacer()
+            DatePicker("", selection: $selectedDate)
+                .datePickerStyle(WheelDatePickerStyle())
+                .labelsHidden()
+            Button(action: {
+                self.flag.toggle()
+            }) {
+                Text("Done")
+            }
+            .padding()
+        }
+        .transition(.move(edge: .bottom))
+        .frame(width:UIScreen.main.bounds.width,height: 300)
+        .background(Color.primary.colorInvert()).cornerRadius(50)
+    }
+}
+
+
 
 struct buttonView: View {
     
@@ -406,42 +505,4 @@ struct EmojiMoodButton: View {
         }
     }
 }
-
-struct CustomCalender: View {
-    
-    @Binding var flag : Bool
-    @State private var selectedDate = Date()
-    @State var dateIs : String = ""
-    
-    static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        return formatter
-    }()
-    
-    var body: some View {
-        
-        Color.gray.opacity(0.7).edgesIgnoringSafeArea(.all)
-            .onTapGesture {
-                self.flag.toggle()
-            }
-        VStack {
-            
-            Spacer()
-            DatePicker("", selection: $selectedDate)
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-            Button(action: {
-                self.flag.toggle()
-            }) {
-                Text("Done")
-            }
-            .padding()
-        }.transition(.move(edge: .bottom))
-        
-        .frame(width:UIScreen.main.bounds.width,height: 300)
-        .background(Color.primary.colorInvert()).cornerRadius(50)
-    }
-}
-
 
