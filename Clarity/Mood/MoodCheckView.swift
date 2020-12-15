@@ -12,9 +12,15 @@ import SwiftUI
 // Date view, maybe it shows from buttom page.
 // background of button to white. // DONE
 
-struct selectionStruct: Identifiable {
-    var id: Int
-    var selection: String
+struct Selectable: SelectableRow {
+    //var id: UU
+    var item: String
+    var isSelected: Bool
+}
+
+protocol SelectableRow {
+    var item: String { get }
+    var isSelected: Bool { get set }
 }
 
 struct MoodCheckView: View {
@@ -27,10 +33,21 @@ struct MoodCheckView: View {
         ["Overwhelmed","Anxious","More +"]
     ]
     
-    let moodArrayTest = ["Wonderful","Excited","Happy","Calm",
+    let moodArrayTest : [[Selectable]] = [
+        [Selectable(item: "Wonderful", isSelected: false)
+         ,Selectable(item: "Excited", isSelected: false),
+         Selectable(item: "Happy", isSelected: false)]
+        ,
+        [Selectable(item: "Calm", isSelected: false),
+         Selectable(item: "I don't know", isSelected: false)
+         ,Selectable(item: "Stressed", isSelected: false)]
+    ]
+        
+        
+        /*["Wonderful","Excited","Happy","Calm",
                          "I don't know","Stressed",
                          "Bored","Lonely","Tired",
-                         "Overwhelmed","Anxious","More +"]
+                         "Overwhelmed","Anxious","More +"]*/
     
     let activityArray =  [
         ["Working","Watching a movie"],
@@ -335,7 +352,7 @@ struct moodCheckingBar : View {
 
 struct moodCheckSelection : View {
     
-    @State var selectedArray : [[String]] = [[]]
+    @State var selectedArray : Selectable? = nil
     @State var tapped : String
     @State var moodData : String
     @State var topic : String
@@ -344,13 +361,10 @@ struct moodCheckSelection : View {
     
     
     var body : some View {
-
         VStack (spacing: 5){
             ForEach(selectedArray, id: \.self) { row in
                 HStack (spacing: 5){
                     ForEach(row, id: \.self) { moodData in
-                        
-                        
                         Text(moodData)
                             .padding(.all, 10.0)
                             .contentShape(Rectangle())
@@ -358,16 +372,13 @@ struct moodCheckSelection : View {
                             .background(self.tapped == moodData ? Color("Myblue"): Color("Mywhite"))
                             .cornerRadius(20)
                             .shadow(radius: 5)
+                            
                             .onTapGesture {
                                 self.tapped = moodData
-                                testArray.insert(tapped, at: mood)
-                                
-                                
-                                self.tapped = moodData
+                                //testArray.insert(tapped, at: mood)
                                 self.topic = moodData
                                 print(moodData)
                                 print(self.topic)
-                                
                                 self.testArray.append(tapped)
                                 
                             }
