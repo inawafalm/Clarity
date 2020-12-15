@@ -12,16 +12,12 @@ import SwiftUI
 // Date view, maybe it shows from buttom page.
 // background of button to white. // DONE
 
-struct Selectable: SelectableRow {
+struct Selectable {
     //var id: UU
     var item: String
     var isSelected: Bool
 }
 
-protocol SelectableRow {
-    var item: String { get }
-    var isSelected: Bool { get set }
-}
 
 struct MoodCheckView: View {
     
@@ -42,12 +38,12 @@ struct MoodCheckView: View {
          Selectable(item: "I don't know", isSelected: false)
          ,Selectable(item: "Stressed", isSelected: false)]
     ]
-        
-        
-        /*["Wonderful","Excited","Happy","Calm",
-                         "I don't know","Stressed",
-                         "Bored","Lonely","Tired",
-                         "Overwhelmed","Anxious","More +"]*/
+    
+    
+    /*["Wonderful","Excited","Happy","Calm",
+     "I don't know","Stressed",
+     "Bored","Lonely","Tired",
+     "Overwhelmed","Anxious","More +"]*/
     
     let activityArray =  [
         ["Working","Watching a movie"],
@@ -165,7 +161,7 @@ struct MoodCheckView: View {
                                 .animation(Animation.easeIn.delay(0.3))
                             VStack {
                                 if self.selected == 0 {
-                                    moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood,testArray: currentMoodArray)
+                                    moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood)
                                         .onAppear() {
                                             self.selected = 0
                                         }
@@ -234,7 +230,7 @@ struct MoodCheckView: View {
                             }) {
                                 Text("Cancel")
                                     .foregroundColor(Color.white)
-
+                                
                             }
                             .padding()
                             .padding(.horizontal,5)
@@ -352,36 +348,52 @@ struct moodCheckingBar : View {
 
 struct moodCheckSelection : View {
     
-    @State var selectedArray : Selectable? = nil
+    @State var selectedArray : [[String]] = [[]]
+    @State var selections = []
+    
     @State var tapped : String
     @State var moodData : String
     @State var topic : String
-    @State var testArray = []
-    var index = 0
+    
+   // var title: String
+    //var isSelected: Bool
+   @State var action: () -> Void
     
     
     var body : some View {
         VStack (spacing: 5){
-            ForEach(selectedArray, id: \.self) { row in
+            ForEach(self.selectedArray, id: \.self) { row in
                 HStack (spacing: 5){
-                    ForEach(row, id: \.self) { moodData in
-                        Text(moodData)
-                            .padding(.all, 10.0)
-                            .contentShape(Rectangle())
-                            .foregroundColor(self.tapped == moodData ? Color("Mywhite"): Color("Myblue"))
-                            .background(self.tapped == moodData ? Color("Myblue"): Color("Mywhite"))
-                            .cornerRadius(20)
-                            .shadow(radius: 5)
+                    ForEach(row, id: \.self) { item in
+                        
+                        Button(action: self.action) {
+                            Text(item)
+                                .padding(.all, 10.0)
+                                .contentShape(Rectangle())
+                                .foregroundColor(self.isSelected == true ? Color("Mywhite"): Color("Myblue"))
+                                .background(self.isSelected == true ? Color("Myblue"): Color("Mywhite"))
+                                .cornerRadius(20)
+                                .shadow(radius: 5)
                             
-                            .onTapGesture {
-                                self.tapped = moodData
-                                //testArray.insert(tapped, at: mood)
-                                self.topic = moodData
-                                print(moodData)
-                                print(self.topic)
-                                self.testArray.append(tapped)
-                                
-                            }
+                        }
+                        
+                        
+                        /*Text(moodData)
+                         .padding(.all, 10.0)
+                         .contentShape(Rectangle())
+                         .foregroundColor(self.tapped == moodData ? Color("Mywhite"): Color("Myblue"))
+                         .background(self.tapped == moodData ? Color("Myblue"): Color("Mywhite"))
+                         .cornerRadius(20)
+                         .shadow(radius: 5)
+                         
+                         .onTapGesture {
+                         self.tapped = moodData
+                         //testArray.insert(tapped, at: mood)
+                         self.topic = moodData
+                         print(moodData)
+                         print(self.topic)
+                         
+                         }*/
                     }
                 }
             }
@@ -390,6 +402,46 @@ struct moodCheckSelection : View {
     }
     
 }
+
+struct MultipleSelectionList: View {
+    @State var items: [String] = ["Apples", "Oranges", "Bananas", "Pears", "Mangos", "Grapefruit"]
+    @State var selections: [String] = []
+
+    var body: some View {
+        List {
+            ForEach(self.items, id: \.self) { item in
+                MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
+                    if self.selections.contains(item) {
+                        self.selections.removeAll(where: { $0 == item })
+                    }
+                    else {
+                        self.selections.append(item)
+                    }
+                }
+            }
+        }
+    }
+}
+struct MultipleSelectionRow: View {
+    var title: String
+    var isSelected: Bool
+    var action: () -> Void
+    
+    var body: some View {
+        Button(action: self.action) {
+            Text(title)
+                .padding(.all, 10.0)
+                .contentShape(Rectangle())
+                .foregroundColor(self.isSelected == true ? Color("Mywhite"): Color("Myblue"))
+                .background(self.isSelected == true ? Color("Myblue"): Color("Mywhite"))
+                .cornerRadius(20)
+                .shadow(radius: 5)
+            
+        }
+        
+    }
+}
+
 
 struct CustomCalender: View {
     
