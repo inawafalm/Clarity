@@ -12,10 +12,9 @@ import SwiftUI
 // Date view, maybe it shows from buttom page.
 // background of button to white. // DONE
 
-struct Selectable {
-    //var id: UU
+struct Selectable: Hashable {
     var item: String
-    var isSelected: Bool
+    var isSelected: Bool = false
 }
 
 
@@ -29,14 +28,14 @@ struct MoodCheckView: View {
         ["Overwhelmed","Anxious","More +"]
     ]
     
-    let moodArrayTest : [[Selectable]] = [
-        [Selectable(item: "Wonderful", isSelected: false)
-         ,Selectable(item: "Excited", isSelected: false),
-         Selectable(item: "Happy", isSelected: false)]
+    var moodArrayTest : [[Selectable]] = [
+        [Selectable(item: "Wonderful")
+         ,Selectable(item: "Excited"),
+         Selectable(item: "Happy")]
         ,
-        [Selectable(item: "Calm", isSelected: false),
-         Selectable(item: "I don't know", isSelected: false)
-         ,Selectable(item: "Stressed", isSelected: false)]
+        [Selectable(item: "Calm"),
+         Selectable(item: "I don't know")
+         ,Selectable(item: "Stressed")]
     ]
     
     
@@ -277,6 +276,7 @@ struct MoodCheckView_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheckView(moodVM: MoodViewModel(), isPresented: .constant(false))
         //CustomCalender(flag: .constant(true))
+        // moodCheckSelection(tapped: "", moodData: "")
     }
 }
 
@@ -348,52 +348,70 @@ struct moodCheckingBar : View {
 
 struct moodCheckSelection : View {
     
-    @State var selectedArray : [[String]] = [[]]
-    @State var selections = []
-    
+    @State var selectedArray : [[String]] = []
+    @State var selectedItem : [String] = []
     @State var tapped : String
     @State var moodData : String
     @State var topic : String
-    
-   // var title: String
-    //var isSelected: Bool
-   @State var action: () -> Void
+    @State private var didTap:Bool = false
     
     
     var body : some View {
         VStack (spacing: 5){
-            ForEach(self.selectedArray, id: \.self) { row in
+            ForEach(selectedArray, id: \.self) { row in
                 HStack (spacing: 5){
-                    ForEach(row, id: \.self) { item in
+                    ForEach(row, id: \.self) { moodData2 in
                         
-                        Button(action: self.action) {
-                            Text(item)
-                                .padding(.all, 10.0)
-                                .contentShape(Rectangle())
-                                .foregroundColor(self.isSelected == true ? Color("Mywhite"): Color("Myblue"))
-                                .background(self.isSelected == true ? Color("Myblue"): Color("Mywhite"))
-                                .cornerRadius(20)
-                                .shadow(radius: 5)
+                        
+                        MultipleSelectionRow(text: moodData2, isSelected: self.selectedItem.contains(moodData2)){
+                            
+                            if self.selectedItem.contains(moodData2) {
+                                self.selectedItem.removeAll(where: { $0 == moodData2 })
+                            }
+                            else {
+                                self.selectedItem.append(moodData2)
+                            }
                             
                         }
                         //
-                        
-                        /*Text(moodData)
+                        /*Text(moodData2)
                          .padding(.all, 10.0)
                          .contentShape(Rectangle())
-                         .foregroundColor(self.tapped == moodData ? Color("Mywhite"): Color("Myblue"))
-                         .background(self.tapped == moodData ? Color("Myblue"): Color("Mywhite"))
+                         .foregroundColor(didTap ? Color("Mywhite"): Color("Myblue"))
+                         .background(didTap ? Color("Myblue"): Color("Mywhite"))
+                         //.foregroundColor(self.tapped == moodData2 ? Color("Mywhite"): Color("Myblue"))
+                         //.background(self.tapped == moodData2 ? Color("Myblue"): Color("Mywhite"))
                          .cornerRadius(20)
                          .shadow(radius: 5)
+                         /*
+                         if self.selectedItem.contains(moodData) {
+                         self.seleselectedItemctions.removeAll(where: { $0 == moodData })
+                         }
+                         else {
+                         self.selectedItem.append(moodData)
+                         }*/
+                         
                          
                          .onTapGesture {
-                         self.tapped = moodData
-                         //testArray.insert(tapped, at: mood)
-                         self.topic = moodData
-                         print(moodData)
-                         print(self.topic)
+                         self.tapped = moodData2
+                         if self.selectedItem.contains(moodData2) {
+                         selectedItem = selectedItem.filter {$0 != moodData2}
+                         
+                         } else {
+                         self.selectedItem.append(tapped)
+                         self.didTap = true
+                         
+                         }
+                         
+                         print(selectedItem)
+                         
+                         //self.topic = moodData
+                         //print(self.topic)
+                         //self.testArray.append(tapped)
+                         
                          
                          }*/
+                        
                     }
                 }
             }
@@ -403,42 +421,23 @@ struct moodCheckSelection : View {
     
 }
 
-struct MultipleSelectionList: View {
-    @State var items: [String] = ["Apples", "Oranges", "Bananas", "Pears", "Mangos", "Grapefruit"]
-    @State var selections: [String] = []
 
-    var body: some View {
-        List {
-            ForEach(self.items, id: \.self) { item in
-                MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
-                    if self.selections.contains(item) {
-                        self.selections.removeAll(where: { $0 == item })
-                    }
-                    else {
-                        self.selections.append(item)
-                    }
-                }
-            }
-        }
-    }
-}
 struct MultipleSelectionRow: View {
-    var title: String
+    @State var text : String
     var isSelected: Bool
     var action: () -> Void
     
+    
     var body: some View {
         Button(action: self.action) {
-            Text(title)
+            Text(text)
                 .padding(.all, 10.0)
                 .contentShape(Rectangle())
-                .foregroundColor(self.isSelected == true ? Color("Mywhite"): Color("Myblue"))
-                .background(self.isSelected == true ? Color("Myblue"): Color("Mywhite"))
+                .foregroundColor(isSelected ? Color("Mywhite"): Color("Myblue"))
+                .background(isSelected ? Color("Myblue"): Color("Mywhite"))
                 .cornerRadius(20)
                 .shadow(radius: 5)
-            
         }
-        
     }
 }
 
