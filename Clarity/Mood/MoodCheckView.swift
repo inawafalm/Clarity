@@ -378,7 +378,7 @@ struct moodCheckSelection : View {
                             }
                             
                         }
-                        
+                        //
                         /*Text(moodData2)
                          .padding(.all, 10.0)
                          .contentShape(Rectangle())
