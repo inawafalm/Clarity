@@ -12,11 +12,16 @@ import SwiftUI
 // Date view, maybe it shows from buttom page.
 // background of button to white. // DONE
 
-struct Selectable: Hashable {
+struct Selectable: SelectableRow {
+    //var id: UU
     var item: String
-    var isSelected: Bool = false
+    var isSelected: Bool
 }
 
+protocol SelectableRow {
+    var item: String { get }
+    var isSelected: Bool { get set }
+}
 
 struct MoodCheckView: View {
     
@@ -28,21 +33,21 @@ struct MoodCheckView: View {
         ["Overwhelmed","Anxious","More +"]
     ]
     
-    var moodArrayTest : [[Selectable]] = [
-        [Selectable(item: "Wonderful")
-         ,Selectable(item: "Excited"),
-         Selectable(item: "Happy")]
+    let moodArrayTest : [[Selectable]] = [
+        [Selectable(item: "Wonderful", isSelected: false)
+         ,Selectable(item: "Excited", isSelected: false),
+         Selectable(item: "Happy", isSelected: false)]
         ,
-        [Selectable(item: "Calm"),
-         Selectable(item: "I don't know")
-         ,Selectable(item: "Stressed")]
+        [Selectable(item: "Calm", isSelected: false),
+         Selectable(item: "I don't know", isSelected: false)
+         ,Selectable(item: "Stressed", isSelected: false)]
     ]
-    
-    
-    /*["Wonderful","Excited","Happy","Calm",
-     "I don't know","Stressed",
-     "Bored","Lonely","Tired",
-     "Overwhelmed","Anxious","More +"]*/
+        
+        
+        /*["Wonderful","Excited","Happy","Calm",
+                         "I don't know","Stressed",
+                         "Bored","Lonely","Tired",
+                         "Overwhelmed","Anxious","More +"]*/
     
     let activityArray =  [
         ["Working","Watching a movie"],
@@ -160,7 +165,7 @@ struct MoodCheckView: View {
                                 .animation(Animation.easeIn.delay(0.3))
                             VStack {
                                 if self.selected == 0 {
-                                    moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood)
+                                    moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood,testArray: currentMoodArray)
                                         .onAppear() {
                                             self.selected = 0
                                         }
@@ -229,7 +234,7 @@ struct MoodCheckView: View {
                             }) {
                                 Text("Cancel")
                                     .foregroundColor(Color.white)
-                                
+
                             }
                             .padding()
                             .padding(.horizontal,5)
@@ -276,7 +281,6 @@ struct MoodCheckView_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheckView(moodVM: MoodViewModel(), isPresented: .constant(false))
         //CustomCalender(flag: .constant(true))
-        // moodCheckSelection(tapped: "", moodData: "")
     }
 }
 
@@ -348,75 +352,36 @@ struct moodCheckingBar : View {
 
 struct moodCheckSelection : View {
     
-    @State var selectedArray : [[String]] = []
-    @State var selectedItem : [String] = []
+    @State var selectedArray : Selectable? = nil
     @State var tapped : String
     @State var moodData : String
     @State var topic : String
-    @State private var didTap:Bool = false
+    @State var testArray = []
+    var index = 0
     
     
     var body : some View {
         VStack (spacing: 5){
             ForEach(selectedArray, id: \.self) { row in
                 HStack (spacing: 5){
-                    ForEach(row, id: \.self) { moodData2 in
-                        
-                        
-                        MultipleSelectionRow(text: moodData2, isSelected: self.selectedItem.contains(moodData2)){
+                    ForEach(row, id: \.self) { moodData in
+                        Text(moodData)
+                            .padding(.all, 10.0)
+                            .contentShape(Rectangle())
+                            .foregroundColor(self.tapped == moodData ? Color("Mywhite"): Color("Myblue"))
+                            .background(self.tapped == moodData ? Color("Myblue"): Color("Mywhite"))
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
                             
-                            if self.selectedItem.contains(moodData2) {
-                                self.selectedItem.removeAll(where: { $0 == moodData2 })
-                                print(selectedItem)
-
+                            .onTapGesture {
+                                self.tapped = moodData
+                                //testArray.insert(tapped, at: mood)
+                                self.topic = moodData
+                                print(moodData)
+                                print(self.topic)
+                                self.testArray.append(tapped)
                                 
                             }
-                            else {
-                                self.selectedItem.append(moodData2)
-                                print(selectedItem)
-
-                            }
-                            
-                        }
-                        
-                        /*Text(moodData2)
-                         .padding(.all, 10.0)
-                         .contentShape(Rectangle())
-                         .foregroundColor(didTap ? Color("Mywhite"): Color("Myblue"))
-                         .background(didTap ? Color("Myblue"): Color("Mywhite"))
-                         //.foregroundColor(self.tapped == moodData2 ? Color("Mywhite"): Color("Myblue"))
-                         //.background(self.tapped == moodData2 ? Color("Myblue"): Color("Mywhite"))
-                         .cornerRadius(20)
-                         .shadow(radius: 5)
-                         /*
-                         if self.selectedItem.contains(moodData) {
-                         self.seleselectedItemctions.removeAll(where: { $0 == moodData })
-                         }
-                         else {
-                         self.selectedItem.append(moodData)
-                         }*/
-                         
-                         
-                         .onTapGesture {
-                         self.tapped = moodData2
-                         if self.selectedItem.contains(moodData2) {
-                         selectedItem = selectedItem.filter {$0 != moodData2}
-                         
-                         } else {
-                         self.selectedItem.append(tapped)
-                         self.didTap = true
-                         
-                         }
-                         
-                         print(selectedItem)
-                         
-                         //self.topic = moodData
-                         //print(self.topic)
-                         //self.testArray.append(tapped)
-                         
-                         
-                         }*/
-                        
                     }
                 }
             }
@@ -425,27 +390,6 @@ struct moodCheckSelection : View {
     }
     
 }
-
-
-struct MultipleSelectionRow: View {
-    @State var text : String
-    var isSelected: Bool
-    var action: () -> Void
-    
-    
-    var body: some View {
-        Button(action: self.action) {
-            Text(text)
-                .padding(.all, 10.0)
-                .contentShape(Rectangle())
-                .foregroundColor(isSelected ? Color("Mywhite"): Color("Myblue"))
-                .background(isSelected ? Color("Myblue"): Color("Mywhite"))
-                .cornerRadius(20)
-                .shadow(radius: 5)
-        }
-    }
-}
-
 
 struct CustomCalender: View {
     
