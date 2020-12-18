@@ -75,23 +75,19 @@ struct MoodCheckView: View {
         "Where are you ?"]
     
     // Vars
-    @State var currentMood: String = ""
-    @State var currentMoodArray = []
-    @State var currentActivity: String = ""
-    @State var peopleWith: String = ""
-    @State var currentPlace: String = ""
-    //Date
     @State var currentMoment: String = ""
+    @State var currentMood: [String] = []
+    @State var currentActivity: [String] = []
+    @State var peopleWith: [String] = []
+    @State var currentPlace: [String] = []
+    //Date
+   
     //@State var selectedDate: String = ""
     
     
     @ObservedObject var moodVM: MoodViewModel
     @Binding var  isPresented: Bool
     @State var selected = 0
-    @State var tapped = ""
-    @State var tapped2 = ""
-    @State var tapped3 = ""
-    @State var tapped4 = ""
     @State var flag = false
     @State var selectedDate = Date()
     @State var holdingDate = Date()
@@ -141,7 +137,7 @@ struct MoodCheckView: View {
                             EmojiMoodButton(colorName: item)
                                 .onTapGesture {
                                     self.currentMoment = "\(item)"
-                                    print(tapped)
+                                    //print(tapped)
                                     if filteredFeelingsArray.count == 1 {
                                         filteredFeelingsArray = feelingsArray
                                     } else {
@@ -153,32 +149,31 @@ struct MoodCheckView: View {
                     
                     // Selection
                     VStack{
-                        if self.currentMoment == "" {
+                        if self.currentMoment != "" {
                         } else {
                             moodCheckingBar(selected: self.$selected)
                                 .padding()
                                 .animation(Animation.easeIn.delay(0.3))
                             VStack {
                                 if self.selected == 0 {
-                                    moodCheckSelection(selectedArray:moodArray,tapped: tapped, moodData: "", topic: self.currentMood)
+                                    moodCheckSelection(selectedArray:moodArray,selectedItem:currentMood)
                                         .onAppear() {
                                             self.selected = 0
                                         }
                                     
                                 } else if self.selected == 1 {
-                                    moodCheckSelection(selectedArray:activityArray,tapped: tapped2, moodData: "", topic: self.currentActivity)
+                                    moodCheckSelection(selectedArray:moodArray,selectedItem:currentActivity)
                                         .onAppear() {
                                             self.selected = 1
                                         }
                                 } else if self.selected == 2 {
-                                    moodCheckSelection(selectedArray:peopleArray,tapped: tapped3, moodData: "", topic: self.peopleWith)
+                                    moodCheckSelection(selectedArray:moodArray,selectedItem:peopleWith)
                                         .onAppear() {
                                             self.selected = 2
                                         }
                                     
                                 } else if self.selected == 3 {
-                                    
-                                    moodCheckSelection(selectedArray:placeArray,tapped: tapped4, moodData: "", topic: self.currentPlace)
+                                    moodCheckSelection(selectedArray:moodArray,selectedItem:currentPlace)
                                         .onAppear() {
                                             self.selected = 3
                                         }
@@ -202,12 +197,12 @@ struct MoodCheckView: View {
                                 .onTapGesture {
                                     self.selected = selected + 1
                                 }
-                            } else {
+                            } /*else {
                                 if self.currentPlace == "" {
                                     
-                                    buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
+                                    //buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
                                 }
-                            }
+                            }*/
                         }
                         
                     }
@@ -350,11 +345,7 @@ struct moodCheckSelection : View {
     
     @State var selectedArray : [[String]] = []
     @State var selectedItem : [String] = []
-    @State var tapped : String
-    @State var moodData : String
-    @State var topic : String
     @State private var didTap:Bool = false
-    
     
     var body : some View {
         VStack (spacing: 5){
@@ -362,7 +353,7 @@ struct moodCheckSelection : View {
                 HStack (spacing: 5){
                     ForEach(row, id: \.self) { moodData2 in
                         
-                        
+                        // Make it in Main struct
                         MultipleSelectionRow(text: moodData2, isSelected: self.selectedItem.contains(moodData2)){
                             
                             if self.selectedItem.contains(moodData2) {
