@@ -154,8 +154,9 @@ struct MoodCheckView: View {
                                 .animation(Animation.easeIn.delay(0.3))
                             VStack {
                                 if self.selected == 0 {
-                                    //moodCheckSelection(selectedArray:moodArray,selectedItem:currentMood)
+
                                     moodSelectionCheck(selectedArray:moodArray,selectedItem:currentMood)
+
                                         .onAppear() {
                                             self.selected = 0
                                         }
