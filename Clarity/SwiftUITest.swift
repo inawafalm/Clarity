@@ -12,18 +12,22 @@ struct testStruct: Identifiable {
     var name : String
 }
 
-var arrayTest : [testStruct] = [testStruct(name: "1"),testStruct(name: "2")]
 
 struct SwiftUITest: View {
     
-    @State var show = false
-    @State var indexArray: Int?
-    @State var selectedMood: testStruct? = nil
-    @State private var selectedDate = Date()
 
+    @State var traficSignal = true
+    
     var body: some View {
         
-        DatePicker("", selection: $selectedDate)
+        Button(action: {
+            traficSignal.toggle()
+        }, label: {
+            
+            Circle()
+                .foregroundColor(traficSignal ? Color.red : Color.green)
+            
+        })
         
     }
 }

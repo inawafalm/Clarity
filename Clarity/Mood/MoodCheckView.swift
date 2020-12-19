@@ -92,7 +92,6 @@ struct MoodCheckView: View {
     @State var feelingsArray = ["1","2","3","4","5"]
     @State var filteredFeelingsArray = ["1","2","3","4","5"]
     
-    
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -156,24 +155,24 @@ struct MoodCheckView: View {
                                 if self.selected == 0 {
 
                                     moodSelectionCheck(selectedArray:moodArray,selectedItem:currentMood)
-
                                         .onAppear() {
                                             self.selected = 0
                                         }
                                     
                                 } else if self.selected == 1 {
-                                    moodCheckSelection(selectedArray:moodArray,selectedItem:currentActivity)
+                                    //moodCheckSelection(selectedArray:activityArray,selectedItem:currentActivity)
+                                    moodSelectionCheck(selectedArray:moodArray,selectedItem:currentActivity)
                                         .onAppear() {
                                             self.selected = 1
                                         }
                                 } else if self.selected == 2 {
-                                    moodCheckSelection(selectedArray:moodArray,selectedItem:peopleWith)
+                                    moodCheckSelection(selectedArray:peopleArray,selectedItem:peopleWith)
                                         .onAppear() {
                                             self.selected = 2
                                         }
                                     
                                 } else if self.selected == 3 {
-                                    moodCheckSelection(selectedArray:moodArray,selectedItem:currentPlace)
+                                    moodCheckSelection(selectedArray:placeArray,selectedItem:currentPlace)
                                         .onAppear() {
                                             self.selected = 3
                                         }
@@ -262,6 +261,8 @@ struct MoodCheckView: View {
         
     }
     
+   
+    
     
 }
 
@@ -345,15 +346,14 @@ struct moodCheckingBar : View {
 private extension MoodCheckView {
     
     @ViewBuilder func moodSelectionCheck(selectedArray:[[String]],selectedItem:[String]) -> some View {
-       // @State var selectedItem : [String] = []
         
         VStack (spacing: 5){
-            ForEach(moodArray, id: \.self) { row in
+            ForEach(selectedArray, id: \.self) { row in
                 HStack (spacing: 5){
                     ForEach(row, id: \.self) { moodData2 in
                         
                         // Make it in Main struct
-                        MultipleSelectionRow(text: moodData2, isSelected: self.currentMood.contains(moodData2)){
+                        MultipleSelectionRow(text: moodData2, isSelected: selectedItem.contains(moodData2)){
                             
                             if self.currentMood.contains(moodData2) {
                                 self.currentMood.removeAll(where: { $0 == moodData2 })
