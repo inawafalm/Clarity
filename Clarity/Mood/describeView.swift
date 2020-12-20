@@ -15,16 +15,16 @@ import SwiftUI
 
 struct moodHandler: Codable {
     
-    let currentMood: String
-    let currentActivity: String
-    let peopleWith: String
-    let currentPlace: String
+    var currentMood: [String] = []
+    var currentActivity: [String] = []
+    var peopleWith: [String] = []
+    var currentPlace: [String] = []
     let whatHappenText: String
     
-    init(currentMood: String,
-         currentActivity:String,
-         peopleWith:String,
-         currentPlace:String,
+    init(currentMood: [String],
+         currentActivity:[String],
+         peopleWith:[String],
+         currentPlace:[String],
          whatHappenText:String) {
         self.currentMood = currentMood
         self.currentActivity = currentActivity
@@ -36,11 +36,11 @@ struct moodHandler: Codable {
 
 struct describeView: View {
     
-    @State var currentMood: String
-    @State var currentActivity: String
-    @State var peopleWith: String
-    @State var currentPlace: String
     @State var currentMoment: String
+    @State var currentMood: [String] = []
+    @State var currentActivity: [String] = []
+    @State var peopleWith: [String] = []
+    @State var currentPlace: [String] = []
     
     @State private var input = "What Happen ?"
     @Binding  var  isPresented: Bool
@@ -66,9 +66,9 @@ struct describeView: View {
 
                 Button(action: {
                     self.isPresented = false
-                    let item = moodStructure(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, whatHappenText: self.input, currentMoment: self.currentMoment, selectedDate: "")
-                    print(item)
-                    self.moodVM.moodArray.append(item)
+                    //let item = moodStructure(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, whatHappenText: self.input, currentMoment: self.currentMoment, selectedDate: "")
+                    //print(item)
+                    //self.moodVM.moodArray.append(item)
                     
                 }, label: {
                     Text("Add")
@@ -86,7 +86,7 @@ struct describeView: View {
 struct describeView_Previews: PreviewProvider {
     @State var isPresentedPreview = false
     static var previews: some View {
-        describeView(currentMood: "Happy", currentActivity: "working", peopleWith: "Friends", currentPlace: "School", currentMoment: "", isPresented: .constant(false), moodVM: MoodViewModel())
+        describeView(currentMoment: "", currentMood: [""], currentActivity: [""], peopleWith: [""], currentPlace: [""], isPresented: .constant(false), moodVM: MoodViewModel())
     }
 }
 #endif

@@ -79,7 +79,7 @@ struct MoodCheckView: View {
     @State var peopleWith: [String] = []
     @State var currentPlace: [String] = []
     //Date
-   
+    
     //@State var selectedDate: String = ""
     
     
@@ -153,29 +153,116 @@ struct MoodCheckView: View {
                                 .animation(Animation.easeIn.delay(0.3))
                             VStack {
                                 if self.selected == 0 {
-
-                                    moodSelectionCheck(selectedArray:moodArray,selectedItem:currentMood)
-                                        .onAppear() {
-                                            self.selected = 0
+                                    
+                                    VStack (spacing: 5){
+                                        ForEach(moodArray, id: \.self) { row in
+                                            HStack (spacing: 5){
+                                                ForEach(row, id: \.self) { moodData2 in
+                                                    
+                                                    // Make it in Main struct
+                                                    MultipleSelectionRow(text: moodData2, isSelected: currentMood.contains(moodData2)){
+                                                        
+                                                        if currentMood.contains(moodData2) {
+                                                            currentMood.removeAll(where: { $0 == moodData2 })
+                                                        }
+                                                        else {
+                                                            currentMood.append(moodData2)
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                
+                                            }
                                         }
+                                        
+                                    }
+                                    .onAppear() {
+                                        self.selected = 0
+                                    }
                                     
                                 } else if self.selected == 1 {
-                                    //moodCheckSelection(selectedArray:activityArray,selectedItem:currentActivity)
-                                    moodSelectionCheck(selectedArray:moodArray,selectedItem:currentActivity)
-                                        .onAppear() {
-                                            self.selected = 1
+                                    VStack (spacing: 5){
+                                        ForEach(activityArray, id: \.self) { row in
+                                            HStack (spacing: 5){
+                                                ForEach(row, id: \.self) { moodData2 in
+                                                    
+                                                    // Make it in Main struct
+                                                    MultipleSelectionRow(text: moodData2, isSelected: currentActivity.contains(moodData2)){
+                                                        
+                                                        if currentActivity.contains(moodData2) {
+                                                            currentActivity.removeAll(where: { $0 == moodData2 })
+                                                        }
+                                                        else {
+                                                            currentActivity.append(moodData2)
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                
+                                            }
                                         }
+                                        
+                                    }
+                                    .onAppear() {
+                                        self.selected = 1
+                                    }
                                 } else if self.selected == 2 {
-                                    moodCheckSelection(selectedArray:peopleArray,selectedItem:peopleWith)
-                                        .onAppear() {
-                                            self.selected = 2
+                                    VStack (spacing: 5){
+                                        ForEach(peopleArray, id: \.self) { row in
+                                            HStack (spacing: 5){
+                                                ForEach(row, id: \.self) { moodData2 in
+                                                    
+                                                    // Make it in Main struct
+                                                    MultipleSelectionRow(text: moodData2, isSelected: peopleWith.contains(moodData2)){
+                                                        
+                                                        if peopleWith.contains(moodData2) {
+                                                            peopleWith.removeAll(where: { $0 == moodData2 })
+                                                        }
+                                                        else {
+                                                            peopleWith.append(moodData2)
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                
+                                            }
                                         }
+                                        
+                                    }
+                                    .onAppear() {
+                                        self.selected = 2
+                                    }
                                     
                                 } else if self.selected == 3 {
-                                    moodCheckSelection(selectedArray:placeArray,selectedItem:currentPlace)
-                                        .onAppear() {
-                                            self.selected = 3
+                                    VStack (spacing: 5){
+                                        ForEach(placeArray, id: \.self) { row in
+                                            HStack (spacing: 5){
+                                                ForEach(row, id: \.self) { moodData2 in
+                                                    
+                                                    // Make it in Main struct
+                                                    MultipleSelectionRow(text: moodData2, isSelected: currentPlace.contains(moodData2)){
+                                                        
+                                                        if currentPlace.contains(moodData2) {
+                                                            currentPlace.removeAll(where: { $0 == moodData2 })
+                                                        }
+                                                        else {
+                                                            currentPlace.append(moodData2)
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                
+                                            }
                                         }
+                                        
+                                    }
+                                    .onAppear() {
+                                        self.selected = 3
+                                    }
                                 }
                             }
                             .padding()
@@ -197,11 +284,11 @@ struct MoodCheckView: View {
                                     self.selected = selected + 1
                                 }
                             } /*else {
-                                if self.currentPlace == "" {
-                                    
-                                    //buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
-                                }
-                            }*/
+                             if self.currentPlace == "" {
+                             
+                             //buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
+                             }
+                             }*/
                         }
                         //
                     }
@@ -261,7 +348,7 @@ struct MoodCheckView: View {
         
     }
     
-   
+    
     
     
 }
@@ -345,7 +432,8 @@ struct moodCheckingBar : View {
 
 private extension MoodCheckView {
     
-    @ViewBuilder func moodSelectionCheck(selectedArray:[[String]],selectedItem:[String]) -> some View {
+    @ViewBuilder func moodSelectionCheck(selectedArray:[[String]],selectedItem:  [String]) -> some View {
+        
         
         VStack (spacing: 5){
             ForEach(selectedArray, id: \.self) { row in
@@ -355,18 +443,20 @@ private extension MoodCheckView {
                         // Make it in Main struct
                         MultipleSelectionRow(text: moodData2, isSelected: selectedItem.contains(moodData2)){
                             
-                            if self.currentMood.contains(moodData2) {
-                                self.currentMood.removeAll(where: { $0 == moodData2 })
+                            if selectedItem.contains(moodData2) {
+                                //selectedItem.removeAll(where: { $0 == moodData2 })
                             }
                             else {
-                                self.currentMood.append(moodData2)
+                                //selectedItem.append(moodData2)
                             }
                             
                         }
-
+                        
                     }
+                    
                 }
             }
+            
         }
         
     }
