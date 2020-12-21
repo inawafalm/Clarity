@@ -13,7 +13,7 @@ import SwiftUI
 
 struct MoodDetail: View {
     
-    var moodDetail = moodStructure(currentMood: "", currentActivity: "", peopleWith: "", currentPlace: "", whatHappenText: "", currentMoment: "", selectedDate: "")
+    var moodDetail = moodStructure(currentMood: [""], currentActivity: [""], peopleWith: [""], currentPlace: [""], whatHappenText: "", currentMoment: "", selectedDate: "")
     @State var myText = ""
     @Binding var  isPresented: Bool
     @State private var AnimationShow = false
@@ -28,8 +28,6 @@ struct MoodDetail: View {
                 
                 MoodCard(moodDetail: moodDetail, isPresented: $isPresented, AnimationShow: AnimationShow)
                         .opacity(AnimationShow ? 1 : 0)
-                       // .offset(y: AnimationShow ? 0 : -100)
-                        //.offset(y: isPresented ? 0 : -100)
                         .onAppear {
                             withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
                                 self.AnimationShow.toggle()
@@ -96,7 +94,7 @@ struct MoodCard: View {
     
     var body: some View {
         
-        
+    
         ZStack{
             VStack{
                 // X Mark
@@ -145,7 +143,7 @@ struct MoodCard: View {
         HStack {
             ZStack {
                 Circle()
-                    .foregroundColor(Color(moodDetail.currentMoment))
+                    //.foregroundColor(Color(moodDetail.currentMoment))
                     .shadow(radius: 3)
                     .frame(width: 50, height: 50)
                 
@@ -156,8 +154,8 @@ struct MoodCard: View {
                     .scaledToFill()
             }
             // Mood Text
-            Text(moodDetail.currentMood)
-                .foregroundColor(Color(moodDetail.currentMoment))
+            Text("moodDetail.currentMood")
+                //.foregroundColor(Color(moodDetail.currentMoment))
                 .font(.title)
                 .fontWeight(.semibold)
         }
@@ -167,13 +165,13 @@ struct MoodCard: View {
         
         // Things
         HStack{
-            Text(moodDetail.currentActivity)
+            Text("moodDetail.currentActivity")
             
             Divider().frame(height: 30)
-            Text(moodDetail.peopleWith)
+            Text("moodDetail.peopleWith")
             
             Divider().frame(height: 30)
-            Text(moodDetail.currentPlace)
+            Text("moodDetail.currentPlace")
             
         }.font(.title3)
         .padding(.top,-10)
@@ -190,7 +188,8 @@ extension View {
 
 struct MoodDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MoodDetail(moodDetail: moodStructure(currentMood: "Happy", currentActivity: "Coding", peopleWith: "Alone", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
+        MoodDetail(moodDetail: moodStructure(currentMood: ["Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
     }
 }
+
 

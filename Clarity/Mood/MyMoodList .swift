@@ -12,10 +12,10 @@ import Combine
 struct moodStructure: Identifiable {
     
     var id = UUID()
-    let currentMood: String
-    let currentActivity: String
-    let peopleWith: String
-    let currentPlace: String
+    let currentMood: [String]
+    let currentActivity: [String]
+    let peopleWith: [String]
+    let currentPlace: [String]
     let whatHappenText: String
     let currentMoment: String
     let selectedDate: String
@@ -25,12 +25,12 @@ struct moodStructure: Identifiable {
 
 class MoodViewModel: ObservableObject {
     @Published var moodArray:  [moodStructure] = [
-        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3", selectedDate: "")
-        ,
+        .init(currentMood: ["Calm"], currentActivity: ["Coding"], peopleWith:[ "Friends"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "3", selectedDate: "")
+        /*,
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "4", selectedDate: ""),
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3", selectedDate: ""),
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "2", selectedDate: ""),
-        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "1", selectedDate: "")]
+        .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "1", selectedDate: "")*/]
     
     /*
      {
@@ -63,15 +63,24 @@ class MoodViewModel: ObservableObject {
 
 
 struct MyMoodList: View {
+
     
-    let currentMood: String
-    let currentActivity: String
-    let peopleWith: String
-    let currentPlace: String
+//    let currentMood: [String]
+//    let currentActivity: [String]
+//    let peopleWith: [String]
+//    let currentPlace: [String]
+//    let whatHappenText: String
+//    let currentMoment: String
+//    let currentColor = ""
+    
+    
+    let currentMood: [String]
+    let currentActivity: [String]
+    let peopleWith: [String]
+    let currentPlace: [String]
     let whatHappenText: String
     let currentMoment: String
     let currentColor = ""
-    
     
     @ObservedObject var moodVM = MoodViewModel()
     @State var isPresentingAddMood = false
@@ -127,7 +136,7 @@ struct MyMoodList: View {
                                             }
                                             
                                             // Mood Text
-                                            Text(item.currentMood)
+                                            Text(item.currentMood[0])
                                                 .foregroundColor(Color(item.currentMoment))
                                                 .font(.title)
                                                 .fontWeight(.semibold)
@@ -138,13 +147,13 @@ struct MyMoodList: View {
                                         
                                         // Things
                                         HStack{
-                                            Text(item.currentActivity)
+                                            Text(item.currentActivity[0])
                                             
                                             Divider().frame(height: 30)
-                                            Text(item.peopleWith)
+                                            Text(item.peopleWith[0])
                                             
                                             Divider().frame(height: 30)
-                                            Text(item.currentPlace)
+                                            Text(item.currentPlace[0])
                                             
                                             Spacer()
                                         }
@@ -192,21 +201,21 @@ struct MyMoodList: View {
         
         .background(EmptyView().fullScreenCover(item: self.$selectedMood) { mood in
            // SwiftUITest2(isPresented: $show, text: mood.name)
-            MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
+            //MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
         })
         
         
         .background(EmptyView().fullScreenCover(item: self.$selectedMood) {
             self.isPresentingMyMood = false
         } content: { mood in
-            MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
+            //MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
         })
 
        //  MoodCheckView
         .background(EmptyView().sheet(isPresented: $isPresentingAddMood, onDismiss: {
             self.isPresentingAddMood = false
         }, content: {
-            MoodCheckView(moodVM: self.moodVM, isPresented: self.$isPresentingAddMood)
+           // MoodCheckView(moodVM: self.moodVM, isPresented: self.$isPresentingAddMood)
 
         }))
         
@@ -220,6 +229,6 @@ struct MyMoodList: View {
 
 struct MyMoodList_Previews: PreviewProvider {
     static var previews: some View {
-        MyMoodList(currentMood: "", currentActivity: "", peopleWith: "", currentPlace: "", whatHappenText: "", currentMoment: "")
+        MyMoodList(currentMood: [""], currentActivity: [""], peopleWith: [""], currentPlace: [""], whatHappenText: "", currentMoment: "")
     }
 }

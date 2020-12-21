@@ -40,21 +40,24 @@ struct TabBarView : View {
         VStack{
             
             switch(tab){
-            
+
             case "heart":
-                MyMoodList(currentMood: "", currentActivity: "", peopleWith: "", currentPlace: "", whatHappenText: "", currentMoment: "")
+                Profile()
+
             case "list.bullet":
                 testFeedView()
-                
+
             case "pencil":
                 MentalFeed()
                     .navigationTitle("MentalFeed")
-                
+
             case "slider.horizontal.3" :
                 Profile()
 
-            default:  MyMoodList(currentMood: "", currentActivity: "", peopleWith: "", currentPlace: "", whatHappenText: "", currentMoment: "")
-                
+            default:
+                Profile()
+
+
             }
             
             Spacer()

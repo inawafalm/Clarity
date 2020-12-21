@@ -26,22 +26,7 @@ struct MoodCheckView: View {
         ["Overwhelmed","Anxious","More +"]
     ]
     
-    var moodArrayTest : [[Selectable]] = [
-        [Selectable(item: "Wonderful")
-         ,Selectable(item: "Excited"),
-         Selectable(item: "Happy")]
-        ,
-        [Selectable(item: "Calm"),
-         Selectable(item: "I don't know")
-         ,Selectable(item: "Stressed")]
-    ]
-    
-    
-    /*["Wonderful","Excited","Happy","Calm",
-     "I don't know","Stressed",
-     "Bored","Lonely","Tired",
-     "Overwhelmed","Anxious","More +"]*/
-    
+
     let activityArray =  [
         ["Working","Watching a movie"],
         ["Drinking coffee","Trying to sleep"],
@@ -65,12 +50,7 @@ struct MoodCheckView: View {
         /* ["...","...","..."],
          ["...","...","More +"]*/
     ]
-    
-    let textArray = [
-        "What do you feel right now ?",
-        "What are you doing ?",
-        "Who  are you with ?",
-        "Where are you ?"]
+   
     
     // Vars
     @State var currentMoment: String = ""
@@ -80,9 +60,6 @@ struct MoodCheckView: View {
     @State var currentPlace: [String] = []
     //Date
     
-    //@State var selectedDate: String = ""
-    
-    
     @ObservedObject var moodVM: MoodViewModel
     @Binding var  isPresented: Bool
     @State var selected = 0
@@ -91,6 +68,7 @@ struct MoodCheckView: View {
     @State var holdingDate = Date()
     @State var feelingsArray = ["1","2","3","4","5"]
     @State var filteredFeelingsArray = ["1","2","3","4","5"]
+    @State var tag:Int? = nil
     
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -146,7 +124,7 @@ struct MoodCheckView: View {
                     
                     // Selection
                     VStack{
-                        if self.currentMoment != "" {
+                        if self.currentMoment == "" {
                         } else {
                             moodCheckingBar(selected: self.$selected)
                                 .padding()
@@ -283,12 +261,23 @@ struct MoodCheckView: View {
                                 .onTapGesture {
                                     self.selected = selected + 1
                                 }
-                            } /*else {
-                             if self.currentPlace == "" {
-                             
-                             //buttonView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
+                            } else {
+                                if self.currentPlace.isEmpty {
+                                    VStack {
+                                        Image(systemName: "chevron.right.circle.fill")
+                                            .foregroundColor(Color.gray)
+                                            .font(.system(size: 50))
+                                        Text("Continue")
+                                            .foregroundColor(Color("Myblack"))
+                                            .font(.footnote)
+                                            .bold()
+                                    }
+                                    
+                                } else {
+                                    
+                                    buttonView(currentMoment: "", currentMood: [""], currentActivity: [""], peopleWith: ["String"], currentPlace: ["String"], moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
+                                }
                              }
-                             }*/
                         }
                         //
                     }
@@ -302,8 +291,6 @@ struct MoodCheckView: View {
                             self.flag.toggle()
                         }
                     VStack {
-                        
-                        
                         HStack {
                             Button(action: {
                                 self.flag.toggle()
@@ -346,8 +333,8 @@ struct MoodCheckView: View {
             .animation(.spring(response: 0.4, dampingFraction: 1.0, blendDuration: 1.0))
         }
         
+        
     }
-    
     
     
     
@@ -358,8 +345,6 @@ struct MoodCheckView: View {
 struct MoodCheckView_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheckView(moodVM: MoodViewModel(), isPresented: .constant(false))
-        //CustomCalender(flag: .constant(true))
-        // moodCheckSelection(tapped: "", moodData: "")
     }
 }
 
@@ -430,110 +415,6 @@ struct moodCheckingBar : View {
 }
 
 
-private extension MoodCheckView {
-    
-    @ViewBuilder func moodSelectionCheck(selectedArray:[[String]],selectedItem:  [String]) -> some View {
-        
-        
-        VStack (spacing: 5){
-            ForEach(selectedArray, id: \.self) { row in
-                HStack (spacing: 5){
-                    ForEach(row, id: \.self) { moodData2 in
-                        
-                        // Make it in Main struct
-                        MultipleSelectionRow(text: moodData2, isSelected: selectedItem.contains(moodData2)){
-                            
-                            if selectedItem.contains(moodData2) {
-                                //selectedItem.removeAll(where: { $0 == moodData2 })
-                            }
-                            else {
-                                //selectedItem.append(moodData2)
-                            }
-                            
-                        }
-                        
-                    }
-                    
-                }
-            }
-            
-        }
-        
-    }
-}
-
-struct moodCheckSelection : View {
-    
-    @State var selectedArray : [[String]] = []
-    @State var selectedItem : [String] = []
-    @State private var didTap:Bool = false
-    
-    var body : some View {
-        VStack (spacing: 5){
-            ForEach(selectedArray, id: \.self) { row in
-                HStack (spacing: 5){
-                    ForEach(row, id: \.self) { moodData2 in
-                        
-                        // Make it in Main struct
-                        MultipleSelectionRow(text: moodData2, isSelected: self.selectedItem.contains(moodData2)){
-                            
-                            if self.selectedItem.contains(moodData2) {
-                                self.selectedItem.removeAll(where: { $0 == moodData2 })
-                            }
-                            else {
-                                self.selectedItem.append(moodData2)
-                            }
-                            
-                        }
-                        //
-                        /*Text(moodData2)
-                         .padding(.all, 10.0)
-                         .contentShape(Rectangle())
-                         .foregroundColor(didTap ? Color("Mywhite"): Color("Myblue"))
-                         .background(didTap ? Color("Myblue"): Color("Mywhite"))
-                         //.foregroundColor(self.tapped == moodData2 ? Color("Mywhite"): Color("Myblue"))
-                         //.background(self.tapped == moodData2 ? Color("Myblue"): Color("Mywhite"))
-                         .cornerRadius(20)
-                         .shadow(radius: 5)
-                         /*
-                         if self.selectedItem.contains(moodData) {
-                         self.seleselectedItemctions.removeAll(where: { $0 == moodData })
-                         }
-                         else {
-                         self.selectedItem.append(moodData)
-                         }*/
-                         
-                         
-                         .onTapGesture {
-                         self.tapped = moodData2
-                         if self.selectedItem.contains(moodData2) {
-                         selectedItem = selectedItem.filter {$0 != moodData2}
-                         
-                         } else {
-                         self.selectedItem.append(tapped)
-                         self.didTap = true
-                         
-                         }
-                         
-                         print(selectedItem)
-                         
-                         //self.topic = moodData
-                         //print(self.topic)
-                         //self.testArray.append(tapped)
-                         
-                         
-                         }*/
-                        
-                    }
-                }
-            }
-        }
-        
-    }
-    
-}
-
-
 struct MultipleSelectionRow: View {
     @State var text : String
     var isSelected: Bool
@@ -592,18 +473,18 @@ struct CustomCalender: View {
 
 struct buttonView: View {
     
-    @State var currentMood: String
-    @State var currentActivity: String
-    @State var peopleWith: String
-    @State var currentPlace: String
-    @State var currentMoment: String
+    @State var currentMoment: String = ""
+    @State var currentMood: [String] = []
+    @State var currentActivity: [String] = []
+    @State var peopleWith: [String] = []
+    @State var currentPlace: [String] = []
     @ObservedObject var moodVM = MoodViewModel()
     @Binding var  isPresented: Bool
     @State var tag:Int? = nil
     
     var body: some View {
         
-        NavigationLink(destination: describeView(currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, currentMoment: self.currentMoment, isPresented: self.$isPresented, moodVM: self.moodVM), tag: 1, selection: $tag) {
+       NavigationLink(destination: describeView(currentMoment: self.currentMoment, currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, isPresented: self.$isPresented, moodVM: self.moodVM), tag: 1, selection: $tag) {
             EmptyView()
         }
         
@@ -615,7 +496,8 @@ struct buttonView: View {
                 .foregroundColor(Color("Myblack"))
                 .font(.footnote)
                 .bold()
-        }.padding()
+        }
+        .padding(8)
         .onTapGesture(perform: {
             tag = 1
         })
@@ -643,6 +525,7 @@ struct EmojiMoodButton: View {
                 .foregroundColor(Color("Myblack"))
                 .font(.footnote)
                 .fontWeight(.bold)
+            
         }
     }
 }
