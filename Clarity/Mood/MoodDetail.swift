@@ -19,177 +19,220 @@ struct MoodDetail: View {
     @State private var AnimationShow = false
     @State private var toggle = false
     
+    var columns: [GridItem] = [
+        GridItem(.fixed(100), spacing: 16),
+        GridItem(.fixed(100), spacing: 16),
+        GridItem(.fixed(100), spacing: 16)
+    ]
+    
     @State var textPassed = ""
     
     var body: some View {
-       
         
-            VStack {
-                
-                MoodCard(moodDetail: moodDetail, isPresented: $isPresented, AnimationShow: AnimationShow)
-                        .opacity(AnimationShow ? 1 : 0)
-                        .onAppear {
-                            withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
-                                self.AnimationShow.toggle()
-                                print(moodDetail)
-                            }
-                        }
-  
-                // Journaling
-                    Text("Hi")
-                        .multilineTextAlignment(.leading)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity,
-                               minHeight: 0, maxHeight: 400,alignment: .topLeading)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
-                        .padding()
-                        .opacity(AnimationShow ? 1 : 0)
-                        .offset(y: AnimationShow ? 0 : 20)
-                        .onAppear {
-                            withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
-                            
-                            }
-                        }
-                        
-                
-                    
-                        
-                // Delete and hide view.
-                Button(action: {
-                   
-                    AnimationShow.toggle()
-                    
-                }) {
-                    
-                    Text("Delete")
-                        .fontWeight(.bold)
-                        .frame(width: 100, height: 50)
-                        .foregroundColor(.white)
-                        .background(Color.red)
-                        .cornerRadius(20)
-                        .shadow(radius: 3)
-
+        
+        VStack {
+            
+            MoodCard(moodDetail: moodDetail, isPresented: $isPresented, AnimationShow: AnimationShow)
+                .opacity(AnimationShow ? 1 : 0)
+                .onAppear {
+                    withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
+                        self.AnimationShow.toggle()
+                        print(moodDetail)
+                    }
                 }
-
-                Spacer()
-            }
-            .onAppear{
-                myText = moodDetail.whatHappenText
+            
+            
+            // Journaling
+            Text("Hi")
+                .multilineTextAlignment(.leading)
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity,
+                       minHeight: 0, maxHeight: 400,alignment: .topLeading)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(radius: 5)
+                .padding()
+                .opacity(AnimationShow ? 1 : 0)
+                .offset(y: AnimationShow ? 0 : 20)
+                .onAppear {
+                    withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
+                        
+                    }
+                }
+            
+            
+            FeelingsView()
+            
+            // Delete and hide view.
+            Button(action: {
+                
+                AnimationShow.toggle()
+                
+            }) {
+                
+                Text("Delete")
+                    .fontWeight(.bold)
+                    .frame(width: 100, height: 50)
+                    .foregroundColor(.white)
+                    .background(Color.red)
+                    .cornerRadius(20)
+                    .shadow(radius: 3)
                 
             }
-            .navigationBarTitle("Current Mood Status", displayMode: .inline)
+            
+            Spacer()
+        }
+        .onAppear{
+            myText = moodDetail.whatHappenText
+            
+        }
+        .navigationBarTitle("Current Mood Status", displayMode: .inline)
         .edgesIgnoringSafeArea(.all)
     }
 }
 
 
-struct MoodCard: View {
-    let moodDetail: moodStructure
-    @Binding var isPresented: Bool
-    @State  var AnimationShow : Bool
-    @Environment(\.presentationMode) var presentationMode
-
+extension MoodDetail {
     
-    var body: some View {
+    
+    @ViewBuilder func FeelingsView() -> some View {
+        VStack{
+            
+            HStack {
+                Text("Feelings")
+                    .font(.subheadline)
+                    .padding(10)
+                Spacer()
+            }
+            
+            HStack{
+                
+                LazyVGrid(
+                    columns: columns,
+                    alignment: .center,
+                    spacing: 16
+                ) {
+                                    ForEach(moodDetail.currentMood, id: \.self) { item in
+                                        Text(item)
+                                    }
+                }
+                
+            }
+                
+                Spacer()
+            }
+            .frame(minWidth: 0, maxWidth: .infinity,
+                   minHeight: 0, maxHeight: 150)
+            .background(SwiftUI.Color.white.edgesIgnoringSafeArea(.all))
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .padding(15)
+            
+        }
         
+    }
     
-        ZStack{
-            VStack{
-                // X Mark
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        
-                        presentationMode.wrappedValue.dismiss()
-                        AnimationShow.toggle()
-                        
-
-                    }) {
-                        
-                        Image(systemName: "xmark")
-                            .foregroundColor(.black)
-                            .padding(10)
-                            .background(Color.white)
-                            .clipShape(Circle())
+    
+    struct MoodCard: View {
+        let moodDetail: moodStructure
+        @Binding var isPresented: Bool
+        @State  var AnimationShow : Bool
+        @Environment(\.presentationMode) var presentationMode
+        
+        var body: some View {
+            
+            
+            ZStack{
+                VStack{
+                    // X Mark
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            
+                            presentationMode.wrappedValue.dismiss()
+                            AnimationShow.toggle()
+                            
+                            
+                        }) {
+                            
+                            Image(systemName: "xmark")
+                                .foregroundColor(.black)
+                                .padding(10)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                        }
                     }
+                    .offset(y: 20)
+                    .padding(.horizontal)
+                    
+                    
+                    // Date
+                    VStack(spacing:5){
+                        Image(systemName:"calendar")
+                            .font(.title)
+                        Text("Saturday, May 9, 04:23")
+                            .underline()
+                            .font(.title3)
+                    }
+                    .foregroundColor(Color.white)
+                    Divider()
+                    
                 }
-                .padding(.horizontal)
-
-                
-                // Date
-                
-                VStack(spacing:5){
-                    Image(systemName:"calendar")
-                        .font(.title)
-                    Text("Saturday, May 9, 04:23")
-                        .underline()
-                        .font(.title3)
+                .padding(.top)
+                .background(Color("Myblue"))
+                .cornerRadius(20)
+            }
+            
+            
+            
+            
+            //face
+            HStack {
+                ZStack {
+                    Circle()
+                        .foregroundColor(Color(moodDetail.currentMoment))
+                        .shadow(radius: 3)
+                        .frame(width: 50, height: 50)
+                    
+                    
+                    Image(moodDetail.currentMoment)
+                        .resizable()
+                        .frame(width: 60, height: 60)
+                        .scaledToFill()
                 }
-                .foregroundColor(Color.white)
-                Divider()
-                
+                // Mood Text
+                Text(moodDetail.currentMood[0])
+                    .foregroundColor(Color(moodDetail.currentMoment))
+                    .font(.title)
+                    .fontWeight(.semibold)
             }
-            .padding(.top,50)
-            .background(Color("Myblue"))
-            .cornerRadius(20)
+            //.animation(Animation.default.delay(1))
+            
+            
+            
+            /*
+             // Things
+             HStack{
+             //Text("moodDetail.currentActivity")
+             
+             Divider().frame(height: 30)
+             // Text("moodDetail.peopleWith")
+             
+             Divider().frame(height: 30)
+             // Text("moodDetail.currentPlace")
+             
+             }.font(.title3)
+             .padding(.top,-10)*/
+            
+            
         }
-       
-        
-        
-       
-        //face
-        HStack {
-            ZStack {
-                Circle()
-                    //.foregroundColor(Color(moodDetail.currentMoment))
-                    .shadow(radius: 3)
-                    .frame(width: 50, height: 50)
-                
-                
-                Image(moodDetail.currentMoment)
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .scaledToFill()
-            }
-            // Mood Text
-            Text("moodDetail.currentMood")
-                //.foregroundColor(Color(moodDetail.currentMoment))
-                .font(.title)
-                .fontWeight(.semibold)
+    }
+    
+    
+    struct MoodDetail_Previews: PreviewProvider {
+        static var previews: some View {
+            MoodDetail(moodDetail: moodStructure(currentMood: ["Happy","Happy","Happy","Happy","Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
         }
-        //.animation(Animation.default.delay(1))
-        
-        
-        
-        // Things
-        HStack{
-            Text("moodDetail.currentActivity")
-            
-            Divider().frame(height: 30)
-            Text("moodDetail.peopleWith")
-            
-            Divider().frame(height: 30)
-            Text("moodDetail.currentPlace")
-            
-        }.font(.title3)
-        .padding(.top,-10)
-       
-        
     }
-}
-
-extension View {
-    func hiddenConditionally(isHidden: Bool) -> some View {
-        isHidden ? AnyView(self.hidden()) : AnyView(self)
-    }
-}
-
-struct MoodDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        MoodDetail(moodDetail: moodStructure(currentMood: ["Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
-    }
-}
 
 
