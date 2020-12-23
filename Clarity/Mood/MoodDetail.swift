@@ -44,7 +44,7 @@ struct MoodDetail: View {
             
             
             // Journaling
-            Text("Hi")
+            /*Text("Hi")
                 .multilineTextAlignment(.leading)
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity,
@@ -59,10 +59,9 @@ struct MoodDetail: View {
                     withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
                         
                     }
-                }
+                }*/
             
             
-           // FeelingsView()
             
             // Delete and hide view.
             Button(action: {
@@ -92,46 +91,6 @@ struct MoodDetail: View {
     }
 }
 
-
-extension MoodDetail {
-    
-    
-    @ViewBuilder func FeelingsView() -> some View {
-        VStack{
-            
-            HStack {
-                Text("Feelings")
-                    .font(.subheadline)
-                    .padding(10)
-                Spacer()
-            }
-            
-            HStack{
-                
-                LazyVGrid(
-                    columns: columns,
-                    alignment: .center,
-                    spacing: 16
-                ) {
-                    ForEach(moodDetail.currentMood, id: \.self){ item in
-                        //Text("")
-                    }
-                }
-                
-            }
-                
-                Spacer()
-            }
-            .frame(minWidth: 0, maxWidth: .infinity,
-                   minHeight: 0, maxHeight: 150)
-            .background(SwiftUI.Color.white.edgesIgnoringSafeArea(.all))
-            .cornerRadius(10)
-            .shadow(radius: 5)
-            .padding(15)
-            
-        }
-        
-    }
     
     
     struct MoodCard: View {
@@ -147,10 +106,9 @@ extension MoodDetail {
         @State  var AnimationShow : Bool
         @Environment(\.presentationMode) var presentationMode
         
-        var data = Array(1...10).map {"Item \($0)"}
-        var dataa = ["2","3","4","5"]
         
         var columns: [GridItem] = [
+            GridItem(.flexible(maximum: 80)),
             GridItem(.flexible(maximum: 80)),
             GridItem(.flexible(maximum: 80))
         ]
@@ -199,9 +157,6 @@ extension MoodDetail {
                 .cornerRadius(20)
             }
             
-            
-            
-            
             //face
             HStack {
                 ZStack {
@@ -225,63 +180,65 @@ extension MoodDetail {
             //.animation(Animation.default.delay(1))
             
             
-            VStack{
-                
-                HStack {
-                    Text("Feelings")
-                        .font(.subheadline)
-                        .padding(10)
-                    Spacer()
-                }
-                
-                HStack{
-                    
-                    LazyVGrid(
-                        columns: columns,
-                        alignment: .center,
-                        spacing: 16
-                    ) {
-                        ForEach(currentMood, id: \.self){ item in
-                            Text(item)
-                        }
-                    }
-                    
-                }
-                    
-                    Spacer()
-                }
-                .frame(minWidth: 0, maxWidth: .infinity,
-                       minHeight: 0, maxHeight: 150)
-                .background(SwiftUI.Color.white.edgesIgnoringSafeArea(.all))
-                .cornerRadius(10)
-                .shadow(radius: 5)
-                .padding(15)
             
+            FeelingsView(title: "Feelings", selectedArray: currentMood)
             
-            /*
-             // Things
-             HStack{
-             //Text("moodDetail.currentActivity")
-             
-             Divider().frame(height: 30)
-             // Text("moodDetail.peopleWith")
-             
-             Divider().frame(height: 30)
-             // Text("moodDetail.currentPlace")
-             
-             }.font(.title3)
-             .padding(.top,-10)*/
+            FeelingsView(title: "Activities", selectedArray: currentActivity)
+            
+            FeelingsView(title: "People with", selectedArray: currentPlace)
+            
             
             
         }
     }
     
-    /*
+
+extension MoodCard {
+    
+    
+    @ViewBuilder func FeelingsView(title:String,selectedArray:[String]) -> some View {
+        
+        VStack{
+            
+            HStack {
+                Text(title)
+                    .font(.subheadline)
+                    .padding(10)
+                Spacer()
+            }
+            
+            HStack{
+                
+                LazyVGrid(
+                    columns: columns,
+                    alignment: .center,
+                    spacing: 16
+                ) {
+                    ForEach(selectedArray, id: \.self){ item in
+                        Text(item)
+                    }
+                }
+                
+            }
+                
+                Spacer()
+            }
+            .frame(minWidth: 0, maxWidth: .infinity,
+                   minHeight: 0, maxHeight: 125)
+            .background(SwiftUI.Color.white.edgesIgnoringSafeArea(.all))
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .padding(.top,10)
+            .padding(.horizontal,15)
+            
+        }
+        
+    }
+
+    
     struct MoodDetail_Previews: PreviewProvider {
         static var previews: some View {
-            MoodDetail(moodDetail: moodStructure(currentMood: ["Happy","Happy","Happy","Happy","Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), currentMoment: "", isPresented: .constant(false))
+            MoodDetail(moodDetail: moodStructure(currentMood: ["Happy","Happy","Happy","Happy","Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
         }
     }
-*/
-
 
