@@ -65,15 +65,6 @@ class MoodViewModel: ObservableObject {
 struct MyMoodList: View {
 
     
-//    let currentMood: [String]
-//    let currentActivity: [String]
-//    let peopleWith: [String]
-//    let currentPlace: [String]
-//    let whatHappenText: String
-//    let currentMoment: String
-//    let currentColor = ""
-    
-    
     let currentMood: [String]
     let currentActivity: [String]
     let peopleWith: [String]
@@ -199,23 +190,24 @@ struct MyMoodList: View {
         }
         
         
-        .background(EmptyView().fullScreenCover(item: self.$selectedMood) { mood in
-           // SwiftUITest2(isPresented: $show, text: mood.name)
-            //MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
-        })
+//        .background(EmptyView().fullScreenCover(item: self.$selectedMood) { mood in
+//           // SwiftUITest2(isPresented: $show, text: mood.name)
+//            MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
+//        })
         
         
         .background(EmptyView().fullScreenCover(item: self.$selectedMood) {
             self.isPresentingMyMood = false
         } content: { mood in
             //MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
+            //MoodDetail(moodDetail: mood, currentMoment: currentMoment, currentMood: currentMood, currentActivity: currentActivity, peopleWith: peopleWith, currentPlace: currentPlace, myText: whatHappenText, isPresented: self.$isPresentingMyMood)
         })
 
        //  MoodCheckView
         .background(EmptyView().sheet(isPresented: $isPresentingAddMood, onDismiss: {
             self.isPresentingAddMood = false
         }, content: {
-           // MoodCheckView(moodVM: self.moodVM, isPresented: self.$isPresentingAddMood)
+            MoodCheckView(moodVM: self.moodVM, isPresented: self.$isPresentingAddMood)
 
         }))
         

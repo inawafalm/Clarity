@@ -85,7 +85,6 @@ struct MoodCheckView: View {
             ZStack (alignment: .bottom) {
                 VStack(alignment: .center) {
                     
-                    //welcomingView(flag: $flag)
                     Text("How are you?")
                         .font(.title)
                         .foregroundColor(Color("Myblack"))
@@ -112,7 +111,6 @@ struct MoodCheckView: View {
                             EmojiMoodButton(colorName: item)
                                 .onTapGesture {
                                     self.currentMoment = "\(item)"
-                                    //print(tapped)
                                     if filteredFeelingsArray.count == 1 {
                                         filteredFeelingsArray = feelingsArray
                                     } else {
@@ -275,7 +273,7 @@ struct MoodCheckView: View {
                                     
                                 } else {
                                     
-                                    buttonView(currentMoment: "", currentMood: [""], currentActivity: [""], peopleWith: ["String"], currentPlace: ["String"], moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
+                                    buttonView(currentMoment: currentMoment, currentMood: currentMood, currentActivity: currentActivity, peopleWith: peopleWith, currentPlace: currentMood, moodVM: self.moodVM, isPresented: $isPresented, tag: nil)
                                 }
                              }
                         }
@@ -285,7 +283,6 @@ struct MoodCheckView: View {
                     Spacer()
                 }
                 if flag {
-                    //CustomCalender(flag: $flag,selectedDate:selectedDate).zIndex(0)
                     Color.gray.opacity(0.7).edgesIgnoringSafeArea(.all)
                         .onTapGesture {
                             self.flag.toggle()
@@ -486,7 +483,10 @@ struct buttonView: View {
         
        NavigationLink(destination: describeView(currentMoment: self.currentMoment, currentMood: self.currentMood, currentActivity: self.currentActivity, peopleWith: self.peopleWith, currentPlace: self.currentPlace, isPresented: self.$isPresented, moodVM: self.moodVM), tag: 1, selection: $tag) {
             EmptyView()
-        }
+       }.onAppear(){
+        print(currentMoment)
+        print(currentActivity)
+       }
         
         VStack {
             Image(systemName: "chevron.right.circle.fill")

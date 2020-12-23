@@ -42,8 +42,7 @@ struct TabBarView : View {
             switch(tab){
 
             case "heart":
-                Profile()
-
+                MyMoodList(currentMood: [""], currentActivity: [""], peopleWith: [""], currentPlace: [""], whatHappenText: "", currentMoment: "")
             case "list.bullet":
                 testFeedView()
 

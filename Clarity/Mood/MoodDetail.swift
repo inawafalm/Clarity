@@ -14,6 +14,7 @@ import SwiftUI
 struct MoodDetail: View {
     
     var moodDetail = moodStructure(currentMood: [""], currentActivity: [""], peopleWith: [""], currentPlace: [""], whatHappenText: "", currentMoment: "", selectedDate: "")
+    
     @State var myText = ""
     @Binding var  isPresented: Bool
     @State private var AnimationShow = false
@@ -32,7 +33,7 @@ struct MoodDetail: View {
         
         VStack {
             
-            MoodCard(moodDetail: moodDetail, isPresented: $isPresented, AnimationShow: AnimationShow)
+            MoodCard(moodDetail: moodDetail, currentMoment: "",currentMood: ["String","2"] ,isPresented: $isPresented, AnimationShow: AnimationShow)
                 .opacity(AnimationShow ? 1 : 0)
                 .onAppear {
                     withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
@@ -61,7 +62,7 @@ struct MoodDetail: View {
                 }
             
             
-            FeelingsView()
+           // FeelingsView()
             
             // Delete and hide view.
             Button(action: {
@@ -112,9 +113,9 @@ extension MoodDetail {
                     alignment: .center,
                     spacing: 16
                 ) {
-                                    ForEach(moodDetail.currentMood, id: \.self) { item in
-                                        Text(item)
-                                    }
+                    ForEach(moodDetail.currentMood, id: \.self){ item in
+                        //Text("")
+                    }
                 }
                 
             }
@@ -135,9 +136,24 @@ extension MoodDetail {
     
     struct MoodCard: View {
         let moodDetail: moodStructure
+        
+        @State var currentMoment: String
+        @State var currentMood: [String] = []
+        @State var currentActivity: [String] = []
+        @State var peopleWith: [String] = []
+        @State var currentPlace: [String] = []
+        
         @Binding var isPresented: Bool
         @State  var AnimationShow : Bool
         @Environment(\.presentationMode) var presentationMode
+        
+        var data = Array(1...10).map {"Item \($0)"}
+        var dataa = ["2","3","4","5"]
+        
+        var columns: [GridItem] = [
+            GridItem(.flexible(maximum: 80)),
+            GridItem(.flexible(maximum: 80))
+        ]
         
         var body: some View {
             
@@ -209,6 +225,38 @@ extension MoodDetail {
             //.animation(Animation.default.delay(1))
             
             
+            VStack{
+                
+                HStack {
+                    Text("Feelings")
+                        .font(.subheadline)
+                        .padding(10)
+                    Spacer()
+                }
+                
+                HStack{
+                    
+                    LazyVGrid(
+                        columns: columns,
+                        alignment: .center,
+                        spacing: 16
+                    ) {
+                        ForEach(currentMood, id: \.self){ item in
+                            Text(item)
+                        }
+                    }
+                    
+                }
+                    
+                    Spacer()
+                }
+                .frame(minWidth: 0, maxWidth: .infinity,
+                       minHeight: 0, maxHeight: 150)
+                .background(SwiftUI.Color.white.edgesIgnoringSafeArea(.all))
+                .cornerRadius(10)
+                .shadow(radius: 5)
+                .padding(15)
+            
             
             /*
              // Things
@@ -228,11 +276,12 @@ extension MoodDetail {
         }
     }
     
-    
+    /*
     struct MoodDetail_Previews: PreviewProvider {
         static var previews: some View {
-            MoodDetail(moodDetail: moodStructure(currentMood: ["Happy","Happy","Happy","Happy","Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
+            MoodDetail(moodDetail: moodStructure(currentMood: ["Happy","Happy","Happy","Happy","Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), currentMoment: "", isPresented: .constant(false))
         }
     }
+*/
 
 
