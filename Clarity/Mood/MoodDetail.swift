@@ -11,7 +11,10 @@ import SwiftUI
 // TODO
 // EVERYTHING.
 
+
+
 struct MoodDetail: View {
+    
     
     var moodDetail = moodStructure(currentMood: [""], currentActivity: [""], peopleWith: [""], currentPlace: [""], whatHappenText: "", currentMoment: "", selectedDate: "")
     
@@ -30,7 +33,6 @@ struct MoodDetail: View {
     
     var body: some View {
         
-        
         VStack {
             
             MoodCard(moodDetail: moodDetail, currentMoment: "",currentMood: ["String","2"] ,isPresented: $isPresented, AnimationShow: AnimationShow)
@@ -44,7 +46,7 @@ struct MoodDetail: View {
             
             
             // Journaling
-            /*Text("Hi")
+            Text("Hi")
                 .multilineTextAlignment(.leading)
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity,
@@ -59,7 +61,8 @@ struct MoodDetail: View {
                     withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
                         
                     }
-                }*/
+                }
+                .offset(y:-80)
             
             
             
@@ -79,6 +82,7 @@ struct MoodDetail: View {
                     .shadow(radius: 3)
                 
             }
+            .offset(y:-90)
             
             Spacer()
         }
@@ -111,6 +115,7 @@ struct MoodDetail: View {
             GridItem(.flexible(maximum: 80)),
             GridItem(.flexible(maximum: 80)),
             GridItem(.flexible(maximum: 80))
+        
         ]
         
         var body: some View {
@@ -165,7 +170,6 @@ struct MoodDetail: View {
                         .shadow(radius: 3)
                         .frame(width: 50, height: 50)
                     
-                    
                     Image(moodDetail.currentMoment)
                         .resizable()
                         .frame(width: 60, height: 60)
@@ -180,16 +184,34 @@ struct MoodDetail: View {
             //.animation(Animation.default.delay(1))
             
             
-            
-            FeelingsView(title: "Feelings", selectedArray: currentMood)
-            
-            FeelingsView(title: "Activities", selectedArray: currentActivity)
-            
-            FeelingsView(title: "People with", selectedArray: currentPlace)
-            
+            TabView{
+                FeelingsView(title: "Feelings", selectedArray: currentMood)
+                
+                FeelingsView(title: "Activities", selectedArray: currentActivity)
+                
+                FeelingsView(title: "People with", selectedArray: peopleWith)
+                
+                FeelingsView(title: "Place", selectedArray: currentPlace)
+
+            }
+           
+            .frame(height: 230, alignment: .center)
+            .tabViewStyle(PageTabViewStyle())
+            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+            .offset(y:-65)
+            .onAppear(){
+                setupAppearance()
+            }
             
             
         }
+        
+        func setupAppearance() {
+            UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.blue
+            UIPageControl.appearance().pageIndicatorTintColor = UIColor.red
+            
+            //UIColor.black.withAlphaComponent(0.2)
+          }
     }
     
 
@@ -211,13 +233,19 @@ extension MoodCard {
                 
                 LazyVGrid(
                     columns: columns,
-                    alignment: .center,
-                    spacing: 16
+                    alignment: .leading,
+                    spacing: 15
                 ) {
                     ForEach(selectedArray, id: \.self){ item in
                         Text(item)
+                            .padding(.all, 10.0)
+                            .contentShape(Rectangle())
+                            .foregroundColor(Color("Mywhite"))
+                            .background(Color("Myblue"))
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
                     }
-                }
+                }.padding(.horizontal)
                 
             }
                 
