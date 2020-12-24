@@ -167,19 +167,6 @@ extension UINavigationController {
     }
 }
 
-extension UIPageViewController {
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        
-        UIPageControl.appearance().currentPageIndicatorTintColor = (UIColor(named: "Myblue"))!
-        UIPageControl.appearance().pageIndicatorTintColor = UIColor.red
-        
-      
-        
-        
-    }
-}
-
 
 
 // Progress Bars and Circle
