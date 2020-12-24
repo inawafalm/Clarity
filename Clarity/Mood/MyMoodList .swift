@@ -31,7 +31,7 @@ class MoodViewModel: ObservableObject {
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3", selectedDate: ""),
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "2", selectedDate: ""),
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "1", selectedDate: "")*/]
-    
+    //
     /*
      {
      didSet {

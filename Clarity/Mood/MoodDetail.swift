@@ -25,7 +25,7 @@ struct MoodDetail: View {
         GridItem(.fixed(100), spacing: 16),
         GridItem(.fixed(100), spacing: 16)
     ]
-    
+    //
     @State var textPassed = ""
     
     var body: some View {
