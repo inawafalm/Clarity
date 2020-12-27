@@ -24,9 +24,7 @@ struct MoodDetail: View {
     @State private var toggle = false
     
     var columns: [GridItem] = [
-        GridItem(.fixed(100), spacing: 16),
-        GridItem(.fixed(100), spacing: 16),
-        GridItem(.fixed(100), spacing: 16)
+        GridItem(.flexible(maximum: 100))
     ]
     
     @State var textPassed = ""
@@ -35,7 +33,7 @@ struct MoodDetail: View {
         
         VStack {
             
-            MoodCard(moodDetail: moodDetail, currentMoment: "",currentMood: ["String","2"] ,isPresented: $isPresented, AnimationShow: AnimationShow)
+            MoodCard(currentMoment: moodDetail.currentMoment, currentMood: moodDetail.currentMood, currentActivity: moodDetail.currentActivity, peopleWith: moodDetail.peopleWith, currentPlace: moodDetail.currentPlace, isPresented: $isPresented, AnimationShow: AnimationShow)
                 .opacity(AnimationShow ? 1 : 0)
                 .onAppear {
                     withAnimation(Animation.easeIn(duration: 0.6).delay(0.4)) {
@@ -98,7 +96,7 @@ struct MoodDetail: View {
     
     
     struct MoodCard: View {
-        let moodDetail: moodStructure
+        
         
         @State var currentMoment: String
         @State var currentMood: [String] = []
@@ -112,10 +110,9 @@ struct MoodDetail: View {
         
         
         var columns: [GridItem] = [
-            GridItem(.flexible(maximum: 80)),
-            GridItem(.flexible(maximum: 80)),
-            GridItem(.flexible(maximum: 80))
-        
+            GridItem(.flexible(maximum: 300), spacing: 5),
+            GridItem(.flexible(maximum: 300), spacing: 5),
+            GridItem(.flexible(maximum: 300), spacing: 5)
         ]
         
         var body: some View {
@@ -166,41 +163,43 @@ struct MoodDetail: View {
             HStack {
                 ZStack {
                     Circle()
-                        .foregroundColor(Color(moodDetail.currentMoment))
+                        .foregroundColor(Color(currentMoment))
                         .shadow(radius: 3)
                         .frame(width: 50, height: 50)
                     
-                    Image(moodDetail.currentMoment)
+                    Image(currentMoment)
                         .resizable()
                         .frame(width: 60, height: 60)
                         .scaledToFill()
                 }
                 // Mood Text
-                Text(moodDetail.currentMood[0])
-                    .foregroundColor(Color(moodDetail.currentMoment))
+                Text(currentMood[0])
+                    .foregroundColor(Color(currentMoment))
                     .font(.title)
                     .fontWeight(.semibold)
             }
             //.animation(Animation.default.delay(1))
             
             
-            TabView{
-                FeelingsView(title: "Feelings", selectedArray: currentMood)
-                
-                FeelingsView(title: "Activities", selectedArray: currentActivity)
-                
-                FeelingsView(title: "People with", selectedArray: peopleWith)
-                
-                FeelingsView(title: "Place", selectedArray: currentPlace)
+            VStack {
+                TabView{
+                    FeelingsView(title: "Feelings", selectedArray: currentMood)
+                    
+                    FeelingsView(title: "Activities", selectedArray: currentActivity)
+                    
+                    FeelingsView(title: "People with", selectedArray: peopleWith)
+                    
+                    FeelingsView(title: "Place", selectedArray: currentPlace)
 
+                }
+               
+                .frame(height: 230, alignment: .center)
+                .tabViewStyle(PageTabViewStyle())
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                .offset(y:-65)
+                .onAppear(){
+                    setupAppearance()
             }
-           
-            .frame(height: 230, alignment: .center)
-            .tabViewStyle(PageTabViewStyle())
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-            .offset(y:-65)
-            .onAppear(){
-                setupAppearance()
             }
             
             
@@ -233,21 +232,21 @@ extension MoodCard {
                 
                 LazyVGrid(
                     columns: columns,
-                    alignment: .leading,
-                    spacing: 15
+                    alignment: .center
+                    //,spacing: 15
                 ) {
                     ForEach(selectedArray, id: \.self){ item in
                         Text(item)
-                            .padding(.all, 10.0)
-                            .contentShape(Rectangle())
+                        
+                            .padding(.all,10)
                             .foregroundColor(Color("Mywhite"))
                             .background(Color("Myblue"))
                             .cornerRadius(20)
-                            .shadow(radius: 5)
+                            //.shadow(radius: 5)
                     }
                 }.padding(.horizontal)
                 
-            }
+            }.offset(y:-15)
                 
                 Spacer()
             }
@@ -266,7 +265,8 @@ extension MoodCard {
     
     struct MoodDetail_Previews: PreviewProvider {
         static var previews: some View {
-            MoodDetail(moodDetail: moodStructure(currentMood: ["Happy","Happy","Happy","Happy","Happy"], currentActivity: ["Coding"], peopleWith: ["Alone"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "5", selectedDate: ""), isPresented: .constant(false))
+            //MoodDetail(currentMood: ["","",""] , isPresented: .constant(false))
+            MoodDetail(moodDetail: moodStructure(currentMood: ["Wonderful","Wonderfull","Wonderfulll","ggg","fghgfh","hgjhgjhg"], currentActivity: [""], peopleWith: [""], currentPlace: [""], whatHappenText: "", currentMoment: "4", selectedDate: ""), isPresented: .constant(false))
         }
     }
 
