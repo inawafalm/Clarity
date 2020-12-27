@@ -35,7 +35,7 @@ struct moodHandler: Codable {
 }
 
 struct describeView: View {
-    
+    //
     @State var currentMoment: String
     @State var currentMood: [String] = []
     @State var currentActivity: [String] = []

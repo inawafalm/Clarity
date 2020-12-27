@@ -25,13 +25,13 @@ struct moodStructure: Identifiable {
 
 class MoodViewModel: ObservableObject {
     @Published var moodArray:  [moodStructure] = [
-        .init(currentMood: ["Calm","Test"], currentActivity: ["Coding","Coffee"], peopleWith:[ "Friends","Pet"], currentPlace: ["Home","University"], whatHappenText: "Nothing.", currentMoment: "3", selectedDate: "")
+        .init(currentMood: ["Calm"], currentActivity: ["Coding"], peopleWith:[ "Friends"], currentPlace: ["Home"], whatHappenText: "Nothing.", currentMoment: "3", selectedDate: "")
         /*,
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "4", selectedDate: ""),
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "3", selectedDate: ""),
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "2", selectedDate: ""),
         .init(currentMood: "Calm", currentActivity: "Coding", peopleWith: "Friends", currentPlace: "Home", whatHappenText: "Nothing.", currentMoment: "1", selectedDate: "")*/]
-    
+    //
     /*
      {
      didSet {
@@ -165,15 +165,19 @@ struct MyMoodList: View {
                         .listRowInsets(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
                             
                     }
+                    
                     .onDelete(perform: removeItems)
+                    
                 }
                 .onAppear {
                     UITableView.appearance().separatorColor = .clear
                     UITableView.appearance().backgroundColor = UIColor.clear
+                    
                 }
                 .listStyle(PlainListStyle())
                 
             }
+            
             .navigationBarTitle("Tracker",displayMode: .large)
             .listStyle(GroupedListStyle())
             .navigationBarHidden(false)
@@ -186,11 +190,17 @@ struct MyMoodList: View {
         }
         
         
+//        .background(EmptyView().fullScreenCover(item: self.$selectedMood) { mood in
+//           // SwiftUITest2(isPresented: $show, text: mood.name)
+//            MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
+//        })
+        
         
         .background(EmptyView().fullScreenCover(item: self.$selectedMood) {
             self.isPresentingMyMood = false
         } content: { mood in
-            MoodDetail(moodDetail: mood, isPresented: $isPresentingMyMood)
+            //MoodDetail(moodDetail: mood, isPresented: self.$isPresentingMyMood)
+            //MoodDetail(moodDetail: mood, currentMoment: currentMoment, currentMood: currentMood, currentActivity: currentActivity, peopleWith: peopleWith, currentPlace: currentPlace, myText: whatHappenText, isPresented: self.$isPresentingMyMood)
         })
 
        //  MoodCheckView
