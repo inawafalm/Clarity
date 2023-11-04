@@ -1,0 +1,143 @@
+/* 
+  Localizable.strings
+  Clarity
+
+  Created by Nawaf Almutairi on 9/26/21.
+  
+*/
+
+"Mood Tracker" = "مذكرة المزاج" ;
+"Thought Record" = "مذكرة الأفكار";
+
+"OLDER" = "أقدم من أسبوع" ;
+"LAST 7 DAYS" = "آخر ٧ أيام";
+"TODAY" = "اليوم" ;
+
+"How are you?" = "كيف حالك؟";
+"Awful" = "سيئ جدًا" ;
+"Meh" = "سيئ" ;
+"OK" = "لا بأس" ;
+"Good" = "جيد" ;
+"Great" = "رائع" ;
+
+"Feelings" = "المشاعر" ;
+"Activity" = "النشاط" ;
+"With"  = "مع" ;
+"Place"  = "المكان" ;
+
+// Arrays
+"Wonderful" = "رائع";
+"Excited" = "متحمس";
+"Happy" = "سعيد";
+"Calm" = "هادئ";
+"I don't know" = "ما أعرف" ;
+"Streesed" = "متوتر" ;
+//
+"Working" = "عمل";
+"Watching a movie" = "مشاهدة فلم" ;
+"Drinking coffee" = "شرب القهوة" ;
+"Nothing" = "ولا شي";
+"Workout" = "رياضة" ;
+"Going out" = "في الخارج";
+//
+
+"Friends" = "اصدقاء" ;
+"Parents" = "الوالدين";
+"Dog" = "كلب";
+"Alone" = "لا احد";
+"Colleages" = "زملاء";
+"Spouse" = "الزوج";
+
+//
+
+"Home" = "المنزل";
+"Work" = "العمل";
+"Coffee Shop" = "كوفي شوب";
+"Park"= "الحديقة";
+"School" = "المدرسة";
+//
+
+"Edit"  = "تعديل"  ;
+"Next"  = "التالي" ;
+"Continue" = "متابعة" ;
+
+"Journaling"  = "التدوين" ;
+//"TEXT"
+
+"What Happend ?"  = "التدوين..." ;
+
+"Add"  = "تم" ;
+
+"Backup to iCloud"  = "نسخة إحتياطية في الآي كلاود" ;
+"Privacy & Security"  = "الخصوصية" ;
+"Language" = "اللغة" ;
+// TEXT
+
+"Home"  = "الرئيسية" ;
+"Settings"  = "الإعدادات" ;
+
+"Your Mood Tracker is Empty" = "لا يوجد أي مذكرة" ;
+
+"TOTAL CHECK IN" = "مجموع المذكرات" ;
+
+// long Text
+
+"Journaling. It's simply writing down your thoughts and feelings to understand them more clearly." = "التدوين هو لفهم مشاعرنا وأفكارنا عبر كتابتها";
+
+"Clarity takes privacy very serious." = "كلاريتي حريصه على حماية الخصوصية" ;
+"• No content, including journal entries and any activity will be saved, tracked or even backed up in our servers. \n• We provide CloudKit so you can easily backup your data easily and securely using your iCloud Account" =
+
+"• لن يتم حفظ أي ملفات، تدوينات الشخصية أو تتبع المستخدم. \n • نوفر لكم خدمة حفظ بياناتكم على سيرفرات أبل من خلال استخدام البريد الإلكتروني الخاص بكم." ;
+
+"Clarity will never have access to your data." =
+"لايمكن لكلاريتي ان تصل الى بياناتكم المحفوظة في الأيكلاود الخاص بكم.
+";
+
+"Storing your enteries in iCloud keeps them up-to-date across all of your devices. If you delete an entry, it will be deleted from iCloud and your devices." =
+"حفظ البيانات في الآي كلاود تبقيها محدثة على جميع اجهزتك. اذا تم حذف أي مذكرة، سوف تحذف من كل الاجهزة وحسابك في الآي كلاود";
+
+"Please don't share your iCloud account so your journals and entries won't be seen by others."
+=
+"لاتستخدم حساب آي كلاود مشترك. لكي لايتم إظهار المذكرات في جهاز آخر.";
+
+
+// CBT THOUGHT RECORD
+
+"CBT Thought Record" = "مذكرة الأفكار - CBT";
+
+"Your Thought Record is Empty" = "لا يوجد أي مذكرة";
+
+"Situation / Trigger" = "الموقف";
+"Automatic Thoughts" = "الأفكار السلبية";
+"Mood/Emotion" = "المشاعر";
+"Evidence for the Thought" = "أدله تدعم الأفكار السلبية";
+"Evidence Against the Thought" = "أدله ضد الأفكار السلبية" ;
+"Alternative Thought" = "التفكير البديل" ;
+"Outcome" = "النتيجة" ;
+
+"-Where where you? \n-What were you doing? \n-Who were you with?" =
+"-مع من كنت؟ \n-ماذا كنت تفعل؟ \n-متى؟ \n-أين؟";
+
+
+"-What thoughts were going through your mind? \n-What memories or images were in my mind?" =
+"-اكتب كل الافكار السلبية ،الخيالات التي كانت تدور في ذهنك";
+
+"-Emotions can be described with one word \n E.g angry,sad,scared \n rate 0-100%" =
+"-صف مشاعرك \n-قيم شدة المشاعر ( 100% - 0)" ;
+
+"-What facts support the truthfulness of this thought or image?" = "-ما الحقائق التي تدعم صدق هذا الفكر أو الصورة؟";
+
+"-What experiences indicate that this thought is not completely true all of the time? \n-If my best friend had this thought what would I tell them? \n-Are there any small experiences which contradict this thought?" =
+"-ما التساؤلات التي تعترض الأفكار السلبية؟ \n-اذا كان صديقك لديه هذه الافكار، ماذا سوف تقول له؟" ;
+
+"-Write a new thought which takes into account the evidence for and against the original thoughts" =
+"-اكتب فكرة بديلة تأخذ في الاعتبار الأدلة المؤيدة والمعارضة للأفكار السلبية.";
+
+"-How do you feel about the situation now? \n Rate 0-100%" =
+"- بناًء على التفكير البديل، أعد تقييم شدة الأفكار السلبية. \n-أعد تقييم شدة مشاعرك السلبية والجديدة ( 100% - 0)";
+
+"Hints for" = "تلميحات لـ";
+
+"Previous" = "العودة";
+
+"Describe" = "اكتب تجربة";

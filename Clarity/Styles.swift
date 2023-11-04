@@ -42,7 +42,6 @@ struct textChoiceStyle2: ViewModifier {
 
 
 
-
 struct MyButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Self.Configuration) -> some View {
@@ -115,21 +114,6 @@ extension Text {
     }
 }
 
-/*
-extension UITabBarController {
-    override open func viewDidLoad() {
-        
-        
-        let standardAppearance = UITabBarAppearance()
-       // standardAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: (UIColor(named: "Mywhite"))!]
-      //  standardAppearance.stackedLayoutAppearance.selected.iconColor = UIColor(named: "Mywhite")
-       // standardAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: (UIColor(named: "Myblack"))!]
-       // standardAppearance.stackedLayoutAppearance.normal.iconColor = UIColor(named: "Myblack")
-        tabBar.standardAppearance = standardAppearance
-        
-    }
-}
-*/
 struct NoButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -153,75 +137,38 @@ extension UINavigationController {
         let appearance = UINavigationBarAppearance()
         //background color of the navigation and status bar
         appearance.backgroundColor = UIColor(named: "Myblue")
+        
         //color when the title is large
-        appearance.largeTitleTextAttributes.updateValue(UIColor.white, forKey: NSAttributedString.Key.foregroundColor)
+        appearance.largeTitleTextAttributes.updateValue(UIColor(named: "Mywhite")!, forKey: NSAttributedString.Key.foregroundColor)
+
         //color when the title is small
-        appearance.titleTextAttributes.updateValue(UIColor.white, forKey: NSAttributedString.Key.foregroundColor)
+        appearance.titleTextAttributes.updateValue(UIColor(named: "Mywhite")!, forKey: NSAttributedString.Key.foregroundColor)
+
         
         // change the background- and title foregroundcolor for navigationbar
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
         // change color of navigationbar items
-        navigationBar.tintColor = UIColor.white
+        navigationBar.tintColor = UIColor(named: "Myblue")
+        UINavigationBar.appearance().tintColor = .white
+
     }
 }
 //
 
 
-// Progress Bars and Circle
-
-
-struct CircleProgress: View {
-    var precent : CGFloat = 0
-    var colors : [Color] = [Color("Myblue2"),Color("Myblue2")]
+extension String {
     
-    var body: some View {
-        ZStack{
-            
-            // expanding
-            Image(systemName: "circle.grid.hex.fill")
-                .renderingMode(.template)
-                .foregroundColor(Color("Myblue2"))
-                .font(.headline)
-                .padding(.all,10)
-                .frame(maxWidth:30,maxHeight: 30)
-                .frame(width: 30, height: 30)
-                .background(Circle()
-                    .stroke(Color("Mygray"),lineWidth: 3)
-                    .overlay(Circle()
-                        .trim(from: 0, to: precent * 0.01)
-                        .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                        .fill(AngularGradient(gradient: .init(colors: colors), center: .center, startAngle: .zero, endAngle: .init(degrees: 360)))
-                    )
-                                .animation(self.precent != 0 ? .spring(response: 1.0, dampingFraction: 1.0, blendDuration: 1.0) : nil )
-            )
-            
-        }
-        
+
+   func removeHTMLTag() -> String {
+
+       return self.replacingOccurrences(of: "<[^>]+>", with: "", options: String.CompareOptions.regularExpression, range: nil)
+
     }
-    
-    
+    func removeNBSP() -> String {
+
+        return self.replacingOccurrences(of: "&nbsp;", with: "", options: String.CompareOptions.regularExpression, range: nil)
+     }
+
 }
-
-
-
-struct BarProgress: View {
-    var value: CGFloat = 0
-    var colors : [Color] = [Color("Myblue"),Color("Myblue")]
-    
-    var body: some View {
-        ZStack(alignment: .leading){
-            Capsule().frame(width:35, height: 5)
-                .foregroundColor(Color("Mygray"))
-            Capsule().frame(width:value, height: 5)
-                .foregroundColor(Color("Myblue2"))
-            
-        }
-        .animation(self.value != 0 ? Animation.easeIn.delay(0.7) : nil)
-        
-    }
-    
-}
-
-

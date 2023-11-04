@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Mood" representedClassName="Mood" syncable="YES">
+        <attribute name="currentActivity" optional="YES" attributeType="Binary"/>
+        <attribute name="currentMoment" optional="YES" attributeType="String"/>
+        <attribute name="currentMood" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="NSArray"/>
+        <attribute name="currentPlace" optional="YES" attributeType="Binary"/>
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="decodedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="journaling" optional="YES" attributeType="String"/>
+        <attribute name="month" optional="YES" attributeType="String"/>
+        <attribute name="peopleWith" optional="YES" attributeType="Binary"/>
+        <attribute name="selectedDate" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="year" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ThoughtRecord" representedClassName="ThoughtRecord" syncable="YES">
+        <attribute name="alterThought" optional="YES" attributeType="String"/>
+        <attribute name="autoThought" optional="YES" attributeType="String"/>
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="decodedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="eat" optional="YES" attributeType="String"/>
+        <attribute name="eft" optional="YES" attributeType="String"/>
+        <attribute name="emotion" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="month" optional="YES" attributeType="String"/>
+        <attribute name="outcome" optional="YES" attributeType="String"/>
+        <attribute name="selectedDate" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="trigger" optional="YES" attributeType="String"/>
+        <attribute name="year" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Mood" positionX="-63" positionY="-27" width="128" height="224"/>
+        <element name="ThoughtRecord" positionX="-63" positionY="72" width="128" height="239"/>
+    </elements>
+</model>

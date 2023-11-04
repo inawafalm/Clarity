@@ -17,118 +17,83 @@ import SwiftUI
 
 struct AppView: View {
     var body: some View {
-        NavigationView{
-            TabBarView()
-                .navigationTitle("")
-                .navigationBarHidden(true)
-        }
+            TabBarView()        
     }
 }
 
-
-
-var tabs = ["MoodTrack","MentalFeed","Profile",""]
 
 
 
 struct TabBarView : View {
     
-    @State var tab = "heart"
+    @State var tab1 = "house.circle"
+    @State var tab2 = "calendar.circle"
+    @State var tab3 = "gearshape"
+    @State private var selection = 0
+
+    
+    init() {
+        setupTabBar()
+        
+        if #available(iOS 15.0, *) {
+        UITabBar.appearance().backgroundColor = UIColor(named: "Myblue")
+        }
+    }
     
     var body: some View{
         
-        VStack{
+        
+        TabView(selection: $selection) {
+            MyMoodList().tabItem
+            {
+                    Image(systemName: tab1)
+                    Text("Home")
+                
+            }.tag(0)
+
+
+            Profile()
+                .tabItem {
+                    Image(systemName: tab3)
+                        Text("Settings")
+                }
+                .tag(2)
+
             
-            switch(tab){
-
-            case "heart":
-                MyMoodList(currentMood: [""], currentActivity: [""], peopleWith: [""], currentPlace: [""], whatHappenText: "", currentMoment: "")
-            case "list.bullet":
-                testFeedView()
-
-            case "pencil":
-                MentalFeed()
-                    .navigationTitle("MentalFeed")
-
-            case "slider.horizontal.3" :
-                Profile()
-
-            default:
-                Profile()
-
-
-            }
-            
-            Spacer()
-            
-            HStack(spacing:6){
-
-                TabButton2(title: "heart", tab: $tab)
-                Spacer(minLength: 0)
-                
-                TabButton2(title: "list.bullet", tab: $tab)
-                Spacer(minLength: 0)
-                
-                TabButton2(title: "pencil", tab: $tab)
-                Spacer(minLength: 0)
-                
-                TabButton2(title: "slider.horizontal.3", tab: $tab)
-                
-                
-            }
-            .padding(.top)
-            .padding(.bottom,UIApplication.shared.windows.first?.safeAreaInsets.bottom == 0 ? 15 :
-                        UIApplication.shared.windows.first?.safeAreaInsets.bottom)
-            .padding(.horizontal,35)
-            //.padding(.bottom)
-            .background(Color("Myblue"))
-            
-        }
-        .edgesIgnoringSafeArea(.all)
-        .background(Color.white.edgesIgnoringSafeArea(.all))
+        }.accentColor(.white)
+        
+        
     }
 }
 
-
-struct TabButton2 : View {
-    
-    var title : String
-    @Binding var tab : String
-    
-    var body: some View{
-        
-        Button(action: {tab = title}) {
-            
-            VStack(spacing: 5){
-                Image(systemName: title)
-                    .font(.headline)
-                    .foregroundColor(tab == title ? Color("Myblue") : .white)
-                
-                     //Text(title)
-                  //  .foregroundColor(tab == title ? Color("Myblue") : .white)
-            
-               //.fontWeight(.bold)
-            }
-            .padding(.vertical,10)
-            .padding(.horizontal)
-            .background(Color.white.opacity(tab == title ? 1 : 0))
-            .clipShape(Capsule())
-            .shadow(radius: 3)
-            
-            
-        }
-        
-        
-        
-    }
-    
+//MARK: - Tab bar view appearance
+extension TabBarView {
+  func setupTabBar() {
+    UITabBar.appearance().barTintColor = UIColor(named: "Myblue")
+    UITabBar.appearance().tintColor = .white
+    UITabBar.appearance().unselectedItemTintColor =  UIColor(.white.opacity(0.5))
+   
+  }
 }
 
 
 
 struct AppView_Previews: PreviewProvider {
     static var previews: some View {
-        AppView()
+        Group {
+            AppView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone 12 pro"))
+                .previewDisplayName("iPhone 12 pro")
+
+            AppView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone 12 mini"))
+                .previewDisplayName("iPhone 12 mini")
+
+            AppView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+                .previewDisplayName("iPhone 8")
+            
+        }
     }
 }
 
